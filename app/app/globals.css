@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/*
+ * Cyanotype. Red is money leaving your pocket, blue is money the plan
+ * absorbs. Nothing else gets a color.
+ */
+@theme {
+  --color-paper: #e9eff3;
+  --color-surface: #fafcfd;
+  --color-line: #c4d4de;
+  --color-ink: #0e2c40;
+  --color-dim: #5e7a8c;
+  --color-blue: #17688e;
+  --color-red: #c33c2b;
+  --color-breach: #8e1f14;
+  /* Red and blue for use on the dark ink surface. */
+  --color-red-soft: #f3a79c;
+  --color-blue-soft: #8cc3dc;
+
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-sans: var(--font-instrument-sans), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+html,
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Faint blueprint grid on the paper. Static, no motion. */
+.blueprint {
+  background-image:
+    linear-gradient(to right, rgb(23 104 142 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(23 104 142 / 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Money past the ceiling: diagonal hatching in the breach color. */
+.hatch {
+  background-color: var(--color-breach);
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.22) 0 4px,
+    transparent 4px 8px
+  );
+}
+
+/* Range input restyled to read as an instrument dial. */
+input[type="range"].ladder {
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: var(--color-line);
+  outline: none;
+}
+input[type="range"].ladder::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-ink);
+  cursor: pointer;
+}
+input[type="range"].ladder::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-ink);
+  cursor: pointer;
+}
+input[type="range"].ladder:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,7 @@
+node_modules/
+.next/
+data-raw/*.csv
+data-raw/duckdb.exe
+Claude outputs/
+extensions.txt
+.env*.local
