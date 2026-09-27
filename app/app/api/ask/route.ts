@@ -5,6 +5,8 @@ import { PEOPLE } from "@/lib/kb/people";
 import { FALLBACK_ANSWER, screen, scrubModelText } from "@/lib/guide";
 
 export const runtime = "nodejs";
+// Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
+export const maxDuration = 60;
 
 const PEOPLE_IDS = Object.keys(PEOPLE);
 

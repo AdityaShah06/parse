@@ -3,8 +3,11 @@ import { ApiError, NoKey, extractJson } from "@/lib/llm";
 import { EXTRACT_SCHEMA, EXTRACT_SYSTEM, NotAnSbc, sanitize } from "@/lib/decode";
 
 export const runtime = "nodejs";
+// Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
+export const maxDuration = 60;
 
-const MAX_BYTES = 10 * 1024 * 1024;
+// Vercel functions reject request bodies over 4.5 MB, so stay under that everywhere.
+const MAX_BYTES = 4 * 1024 * 1024;
 
 /**
  * POST a PDF as multipart form field "file". Returns the decoded plan for the
@@ -22,7 +25,7 @@ export async function POST(req: Request) {
 
   if (!file) return NextResponse.json({ ok: false, code: "bad_request", error: "No file received." }, { status: 400 });
   if (file.size > MAX_BYTES) {
-    return NextResponse.json({ ok: false, code: "too_big", error: "That PDF is over 10 MB." }, { status: 413 });
+    return NextResponse.json({ ok: false, code: "too_big", error: "That PDF is over 4 MB." }, { status: 413 });
   }
   const bytes = Buffer.from(await file.arrayBuffer());
   if (bytes.subarray(0, 5).toString() !== "%PDF-") {

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { STATE_MARKETPLACES, isHealthcareGovState, countiesByZip, getPlan, searchPlans, toEnginePlanDetailed, toHttpError, type ApiPlan } from "@/lib/marketplace";
 
 export const runtime = "nodejs";
+// Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
+export const maxDuration = 60;
 
 /**
  * GET /api/marketplace/plans?zip=65201&age=21&income=24000

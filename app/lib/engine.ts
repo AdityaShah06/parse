@@ -128,6 +128,12 @@ function copayFor(
   return cs.amount * capped;
 }
 
+/** Coinsurance on an amount, never above the benefit's per-event cap. */
+function coins(cs: { rate: number; maxPerEvent?: number }, amount: number): number {
+  const share = amount * cs.rate;
+  return cs.maxPerEvent !== undefined && cs.maxPerEvent > 0 ? Math.min(share, cs.maxPerEvent) : share;
+}
+
 /**
  * Apply one care event to the accumulator.
  *
@@ -202,7 +208,7 @@ export function applyEvent(
         ? remainder > 0
           ? Math.min(copayFor(cs, event, plan), remainder)
           : 0
-        : remainder * cs.rate;
+        : coins(cs, remainder);
   } else {
     // Deductible waived for this benefit. Cost sharing applies from the first
     // dollar. ASSUMPTION: what the patient pays here counts toward the
@@ -212,7 +218,7 @@ export function applyEvent(
     costShare =
       cs.kind === "copay"
         ? Math.min(copayFor(cs, event, plan), event.allowedAmount)
-        : event.allowedAmount * cs.rate;
+        : coins(cs, event.allowedAmount);
   }
 
   const uncapped = toDeductible + costShare;

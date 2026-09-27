@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { blobGet, blobSet, envLimit, spend } from "@/lib/server-cache";
 
 export const runtime = "nodejs";
+// Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
+export const maxDuration = 60;
 
 /**
  * GET /api/speak?t=<line>

@@ -14,7 +14,7 @@ const ERRORS: Record<string, string> = {
   no_key: "My reader isn't plugged in on this computer. The example plan works offline.",
   not_sbc: "That's a PDF, but not a Summary of Benefits. I admire the confidence.",
   not_pdf: "That's not a PDF. I only read PDFs. It's a personal thing.",
-  too_big: "That file is over 10 MB. Summaries are usually under 1.",
+  too_big: "That file is over 4 MB. Summaries are usually under 1.",
 };
 
 const STATUS = [
@@ -50,6 +50,8 @@ export default function Decode({
       let d: Decoded;
       if (file === "sample") d = sampleDecoded();
       else {
+        // Hosted functions reject request bodies over 4.5 MB before the route runs.
+        if (file.size > 4 * 1024 * 1024) throw new Error(ERRORS.too_big);
         const body = new FormData();
         body.append("file", file);
         const res = await fetch("/api/decode-plan", { method: "POST", body });

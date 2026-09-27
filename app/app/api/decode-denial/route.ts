@@ -3,6 +3,8 @@ import { ApiError, NoKey, extractJson } from "@/lib/llm";
 import { DENIAL_SCHEMA, DENIAL_SYSTEM, NotADenial, sanitizeDenial } from "@/lib/denial";
 
 export const runtime = "nodejs";
+// Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
+export const maxDuration = 60;
 
 const MAX_BYTES = 10 * 1024 * 1024;
 

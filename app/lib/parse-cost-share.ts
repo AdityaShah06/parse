@@ -19,7 +19,13 @@
 
 export type CostShare =
   | { kind: "notApplicable" }
-  | { kind: "coinsurance"; rate: number; afterDeductible: boolean }
+  | {
+      kind: "coinsurance";
+      rate: number;
+      afterDeductible: boolean;
+      /** SBC "10% coinsurance up to $50": the most one event costs in coinsurance. Undefined means uncapped. */
+      maxPerEvent?: number;
+    }
   | {
       kind: "copay";
       amount: number;

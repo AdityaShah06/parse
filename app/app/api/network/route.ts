@@ -3,6 +3,8 @@ import { formatAddress, isPlanId, providersCovered, providersSearch, toHttpError
 import { checkPlaces, NETWORK_SOURCE, type PlaceIn } from "@/lib/network";
 
 export const runtime = "nodejs";
+// Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
+export const maxDuration = 60;
 
 const SOURCE = NETWORK_SOURCE;
 

@@ -3,6 +3,8 @@ import { ApiError, NoKey, extractJson } from "@/lib/llm";
 import { cached } from "@/lib/server-cache";
 
 export const runtime = "nodejs";
+// Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
+export const maxDuration = 60;
 
 /**
  * POST /api/plan-explain { facts }

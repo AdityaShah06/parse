@@ -89,6 +89,8 @@ export type BenefitRow = Evidence & {
   percent: number | null;
   deductibleApplies: boolean | null;
   per: "visit" | "day" | "stay" | "fill" | null;
+  /** "20% coinsurance up to $100": the cap, read from the printed text, not from the model. */
+  maxPerEvent?: number | null;
 };
 
 export type Decoded = PlanInfo & {
@@ -286,11 +288,20 @@ function cleanRows(v: unknown): BenefitRow[] {
       percent: kind === "coinsurance" ? percent : null,
       deductibleApplies: typeof o.deductible_applies === "boolean" ? o.deductible_applies : null,
       per: ["visit", "day", "stay", "fill"].includes(o.per as string) ? (o.per as BenefitRow["per"]) : null,
+      maxPerEvent: kind === "coinsurance" ? capIn(o.text) : null,
       quote: cleanText(o.text, 160),
       page: cleanPage(o.page),
     });
   }
   return out;
+}
+
+/** The dollar cap in "10% coinsurance up to $50" (also "max $50", "maximum of $50"), or null. */
+export function capIn(text: unknown): number | null {
+  if (typeof text !== "string") return null;
+  const m = text.replace(/\s+/g, " ").match(/\b(?:up to|max(?:imum)?(?: of)?)\s*\$\s?([\d,]+(?:\.\d{2})?)/i);
+  const n = m ? Number(m[1].replace(/,/g, "")) : NaN;
+  return Number.isFinite(n) && n > 0 && n <= 20000 ? n : null;
 }
 
 /**
@@ -309,7 +320,8 @@ export function rowToCostShare(r: BenefitRow): CostShare | null {
   if (r.kind === "free") return { kind: "coinsurance", rate: 0, afterDeductible: r.deductibleApplies === true };
   if (r.kind === "copay" && r.amount !== null)
     return { kind: "copay", amount: r.amount, afterDeductible: r.deductibleApplies === true, unit: r.per === "day" ? "day" : r.per === "stay" ? "stay" : "visit" };
-  if (r.kind === "coinsurance" && r.percent !== null) return { kind: "coinsurance", rate: r.percent / 100, afterDeductible: r.deductibleApplies !== false };
+  if (r.kind === "coinsurance" && r.percent !== null)
+    return { kind: "coinsurance", rate: r.percent / 100, afterDeductible: r.deductibleApplies !== false, ...(r.maxPerEvent ? { maxPerEvent: r.maxPerEvent } : {}) };
   return null;
 }
 

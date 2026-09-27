@@ -6,6 +6,8 @@ import { envLimit, spend } from "@/lib/server-cache";
 import { PEOPLE } from "@/lib/kb/people";
 
 export const runtime = "nodejs";
+// Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
+export const maxDuration = 60;
 
 const CRISIS = /\b(suicid\w*|kill (myself|me)|end my life|self[- ]?harm|hurt (myself|me)|want to die|overdos\w*)\b/i;
 // Narrower than the old Ask room: "does my plan cover pregnancy" is an insurance question, "should I go to the ER" is not.

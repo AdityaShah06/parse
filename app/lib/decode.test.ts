@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { NotAnSbc, decodedToCard, sampleDecoded, sanitize } from "./decode";
+import { NotAnSbc, capIn, decodedToCard, sampleDecoded, sanitize } from "./decode";
 import { cardPlan } from "./card";
 import { BENEFIT } from "./load-plans";
 
@@ -111,6 +111,15 @@ describe("benefit rows", () => {
     expect(d.rows!.map((r) => r.key)).toEqual(["mental", "imaging", "preventive", "inpatient"]);
     expect(d.referralRequired).toBe(false);
     expect(d.excluded).toEqual(["Cosmetic surgery", "Long-term care"]);
+  });
+
+  it("reads a per-fill cap from the printed text and hands it to the engine", () => {
+    expect(capIn("10% coinsurance\nup to $50")).toBe(50);
+    expect(capIn("20% coinsurance, maximum of $1,000 per fill")).toBe(1000);
+    expect(capIn("20% coinsurance")).toBeNull();
+    const d = sanitize({ ...good, benefits: [{ service: "generic", text: "10% coinsurance\nup to $50", kind: "coinsurance", percent: 10, deductible_applies: true, per: "fill" }] });
+    const { plan } = cardPlan(decodedToCard(d));
+    expect(plan.costSharing[BENEFIT.GENERIC_DRUGS]).toEqual({ kind: "coinsurance", rate: 0.1, afterDeductible: true, maxPerEvent: 50 });
   });
 
   it("uses the combined x-ray and blood work row for labs when there is no lab row", () => {

@@ -31,7 +31,8 @@ let dirPromise: Promise<string | null> | null = null;
 async function cacheDir(): Promise<string | null> {
   if (!dirPromise) {
     dirPromise = (async () => {
-      for (const base of [path.join(process.cwd(), ".cache"), path.join(os.tmpdir(), "plainly-cache")]) {
+      // The ignore hints stop the bundler from tracing the whole project into every function.
+      for (const base of [path.join(/*turbopackIgnore: true*/ process.cwd(), ".cache"), path.join(/*turbopackIgnore: true*/ os.tmpdir(), "plainly-cache")]) {
         try {
           await fs.mkdir(base, { recursive: true });
           const probe = path.join(base, ".probe");
@@ -50,7 +51,7 @@ async function cacheDir(): Promise<string | null> {
 const hash = (s: string) => createHash("sha256").update(s).digest("hex").slice(0, 32);
 
 function fileFor(dir: string, namespace: string, key: string, ext = "json") {
-  return path.join(dir, namespace.replace(/[^a-z0-9-]/gi, "_"), `${hash(key)}.${ext}`);
+  return path.join(/*turbopackIgnore: true*/ dir, namespace.replace(/[^a-z0-9-]/gi, "_"), `${hash(key)}.${ext}`);
 }
 
 /** Read a cached JSON value, or undefined when missing or expired. */
@@ -140,7 +141,7 @@ async function loadLedger(): Promise<Ledger> {
   const dir = await cacheDir();
   if (dir) {
     try {
-      ledger = JSON.parse(await fs.readFile(path.join(dir, "budgets.json"), "utf8")) as Ledger;
+      ledger = JSON.parse(await fs.readFile(path.join(/*turbopackIgnore: true*/ dir, "budgets.json"), "utf8")) as Ledger;
       return ledger;
     } catch {
       // first run
@@ -155,7 +156,7 @@ function saveLedger() {
     const dir = await cacheDir();
     if (!dir || !ledger) return;
     try {
-      await fs.writeFile(path.join(dir, "budgets.json"), JSON.stringify(ledger, null, 2));
+      await fs.writeFile(path.join(/*turbopackIgnore: true*/ dir, "budgets.json"), JSON.stringify(ledger, null, 2));
     } catch {
       // not fatal
     }
