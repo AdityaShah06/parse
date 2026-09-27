@@ -9,3 +9,12 @@ app/.cache/
 app/data/.cache/
 app/data/raw/
 app/data/api-samples/
+
+# Local working notes and editor/agent config, kept out of the public repo
+CLAUDE.md
+AGENTS.md
+HANDOFF.md
+BUILD_PLAN.md
+DESIGN.md
+.claude/
+.vscode/

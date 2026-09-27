@@ -19,15 +19,15 @@ export type Pin = { id: string; lat: number; lng: number; label: string; tone: "
 declare global {
   interface Window {
     google?: any;
-    __plainlyMaps?: Promise<void>;
+    __parseMaps?: Promise<void>;
   }
 }
 
 function loadMaps(): Promise<void> {
   if (typeof window === "undefined") return Promise.reject();
   if (window.google?.maps?.Map) return Promise.resolve();
-  if (!window.__plainlyMaps) {
-    window.__plainlyMaps = new Promise((resolve, reject) => {
+  if (!window.__parseMaps) {
+    window.__parseMaps = new Promise((resolve, reject) => {
       const s = document.createElement("script");
       s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(MAPS_KEY)}&v=weekly`;
       s.async = true;
@@ -36,7 +36,7 @@ function loadMaps(): Promise<void> {
       document.head.appendChild(s);
     });
   }
-  return window.__plainlyMaps;
+  return window.__parseMaps;
 }
 
 const DAY = [

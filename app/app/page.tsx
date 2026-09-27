@@ -1,5 +1,5 @@
-import Plainly from "@/components/plainly/Plainly";
+import Parse from "@/components/parse/Parse";
 
 export default function Home() {
-  return <Plainly />;
+  return <Parse />;
 }

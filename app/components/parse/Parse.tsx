@@ -48,7 +48,7 @@ const UNINSURED = uninsuredPlan();
 const ROOM_LINES: Partial<Record<Room, string[]>> = {
 };
 
-export default function Plainly() {
+export default function Parse() {
   const [s, dispatch] = useReducer(reducer, undefined, initialState);
   const [theme] = useTheme();
   const night = theme === "night";

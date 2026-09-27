@@ -62,7 +62,7 @@ async function main() {
       if (/API_KEY_INVALID|UNAUTHENTICATED|PERMISSION_DENIED/.test(text)) break;
     }
   }
-  console.log("\nNo combination worked. Paste this output back to Claude.");
+  console.log("\nNo combination worked. Include this output when reporting the problem.");
 }
 
 // exitCode instead of process.exit(): exiting mid-request crashes Node on Windows.
