@@ -20,7 +20,7 @@ export const LIMITS = {
   speak: { perMinute: 20, perDay: 150 },
   decode: { perMinute: 4, perDay: 20 },
   explain: { perMinute: 20, perDay: 200 },
-  places: { perMinute: 20, perDay: 150 },
+  places: { perMinute: 40, perDay: 400 },
   lookup: { perMinute: 60, perDay: 600 },
 } satisfies Record<string, Limit>;
 
@@ -60,6 +60,8 @@ async function bump(key: string, ttlSeconds: number): Promise<number> {
  * over a limit, or null to carry on.
  */
 export async function rateLimit(req: Request, name: LimitName): Promise<NextResponse | null> {
+  // Local development is one visitor clicking fast; the daily budgets still apply.
+  if (process.env.NODE_ENV !== "production") return null;
   const upper = name.toUpperCase();
   const perMinute = envInt(`RATE_${upper}_MIN`, LIMITS[name].perMinute);
   const perDay = envInt(`RATE_${upper}_DAY`, LIMITS[name].perDay);

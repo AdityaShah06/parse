@@ -19,7 +19,7 @@ const SOURCE = NETWORK_SOURCE;
  * GET /api/network?planId=&npis=a,b checks NPIs directly.
  */
 export async function POST(req: Request) {
-  const limited = await rateLimit(req, "places");
+  const limited = await rateLimit(req, "lookup");
   if (limited) return limited;
   let body: { planId?: string; zip?: string; places?: PlaceIn[] };
   try {
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
-  const limited = await rateLimit(req, "places");
+  const limited = await rateLimit(req, "lookup");
   if (limited) return limited;
   const u = new URL(req.url).searchParams;
   const planId = u.get("planId") ?? "";

@@ -111,7 +111,9 @@ export function keyFingerprint(): string {
  * all at once. When the chosen model is busy, a request moves down this list
  * (tried in order, after the working model) instead of failing.
  */
-const FALLBACK = ["gemini-flash-latest", "gemini-3.8-flash", "gemini-flash-lite-latest", "gemini-3.5-flash"];
+const FALLBACK = ["gemini-flash-lite-latest", "gemini-flash-latest", "gemini-3.7-flash", "gemini-3.8-flash"];
+/** One model gets this long before the request moves on; the whole route has 60 seconds on Vercel. */
+const ATTEMPT_MS = 25_000;
 /** Busy, rate limited, a server hiccup, or a model name this key cannot use. */
 const RETRYABLE = new Set([404, 429, 500, 502, 503, 504]);
 /** A model that just rescued a request stays first for a minute, so one conversation stays on one model. */
@@ -122,7 +124,14 @@ async function withFallback(send: (model: string) => Promise<Response>): Promise
   const first = sticky && sticky.until > Date.now() ? sticky.model : t.model;
   const chain = [first, t.model, ...FALLBACK].filter((m, i, a) => a.indexOf(m) === i);
   for (let i = 0; ; i++) {
-    const res = await send(chain[i]);
+    let res: Response;
+    try {
+      res = await send(chain[i]);
+    } catch (e) {
+      // A timeout or dropped connection on one model is a reason to try the next.
+      if (i === chain.length - 1) throw e;
+      continue;
+    }
     if (!RETRYABLE.has(res.status) || i === chain.length - 1) {
       if (res.ok) sticky = chain[i] === t.model ? null : { model: chain[i], until: Date.now() + 60_000 };
       return res;
@@ -176,7 +185,7 @@ export async function extractJson(opts: {
       method: "POST",
       headers: headers(auth),
       body: JSON.stringify({ ...body, generationConfig }),
-      signal: AbortSignal.timeout(90000),
+      signal: AbortSignal.timeout(ATTEMPT_MS),
     });
   };
 
@@ -221,7 +230,7 @@ export async function generateRaw(body: Record<string, unknown>, timeoutMs = 600
       method: "POST",
       headers: headers(auth),
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(timeoutMs),
+      signal: AbortSignal.timeout(Math.min(timeoutMs, ATTEMPT_MS)),
     })
   );
   if (!res.ok) {
