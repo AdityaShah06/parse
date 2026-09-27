@@ -18,7 +18,7 @@ export const maxDuration = 60;
 const SCHEMA = {
   type: "object",
   properties: {
-    headline: { type: "string", description: "One short sentence, the plan in a nutshell, deadpan and plain. Under 14 words." },
+    headline: { type: "string", description: "One short sentence with a point of view: the plan's personality or its catch, dry and a little funny, like a tired actuary. Never just restate the plan name, metal level, type or premium. Under 12 words." },
     summary: { type: "string", description: "Two or three sentences: what kind of plan this is and how it behaves in a normal year and a bad year." },
     bestFor: { type: "string", description: "One sentence: who this plan works well for." },
     watchOut: { type: "string", description: "One sentence: the single biggest thing to be careful about." },
@@ -65,7 +65,7 @@ export async function POST(req: Request) {
   const allowed = new Set(numbersIn(factsText));
 
   try {
-    const out = await cached("plan-explain", SYSTEM + factsText,7 * 24 * 3600 * 1000, async () => {
+    const out = await cached("plan-explain", SYSTEM + JSON.stringify(SCHEMA) + factsText, 7 * 24 * 3600 * 1000, async () => {
       const raw = (await extractJson({ system: SYSTEM, schema: SCHEMA, maxTokens: 900, parts: [{ text: `Facts about this plan (JSON):\n${factsText}` }] })) as Record<string, unknown>;
       const moves = Array.isArray(raw.moves)
         ? raw.moves
