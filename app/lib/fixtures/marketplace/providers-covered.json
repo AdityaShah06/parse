@@ -1,0 +1,31 @@
+{
+ "Provider & Drug Coverage": [
+  {
+   "npi": "1234567893",
+   "plan_id": "99991MO0020002",
+   "coverage": "Covered",
+   "accepting": "accepting",
+   "addresses": [
+    {
+     "street_1": "1101 Hospital Dr",
+     "city": "Columbia",
+     "state": "MO",
+     "zipcode": "65201"
+    }
+   ]
+  },
+  {
+   "npi": "1245319599",
+   "plan_id": "99991MO0020002",
+   "coverage": "NotCovered",
+   "accepting": "accepting",
+   "addresses": []
+  },
+  {
+   "npi": "1003000126",
+   "plan_id": "99991MO0020002",
+   "coverage": "DataNotProvided",
+   "accepting": "unknown"
+  }
+ ]
+}

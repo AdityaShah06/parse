@@ -89,3 +89,44 @@ describe("decoded plan to engine plan", () => {
     expect(d.copays.er.value).toBeNull();
   });
 });
+
+describe("benefit rows", () => {
+  const withRows = {
+    ...good,
+    referral_required: false,
+    excluded_services: ["Cosmetic surgery", "Long-term care"],
+    benefits: [
+      { service: "mental", text: "$30 copay/office visit; deductible does not apply", kind: "copay", amount: 30, deductible_applies: false, per: "visit", page: 3 },
+      { service: "imaging", text: "20% coinsurance", kind: "coinsurance", percent: 20, deductible_applies: true, page: 2 },
+      { service: "preventive", text: "No charge", kind: "free", deductible_applies: false },
+      { service: "inpatient", text: "$500 copay per day", kind: "copay", amount: 500, per: "day", deductible_applies: true },
+      { service: "imaging", text: "duplicate", kind: "coinsurance", percent: 90 },
+      { service: "spa", text: "nonsense", kind: "free" },
+      { service: "labs", text: "copay with no number", kind: "copay" },
+    ],
+  };
+
+  it("keeps valid rows once each and drops the rest", () => {
+    const d = sanitize(withRows);
+    expect(d.rows!.map((r) => r.key)).toEqual(["mental", "imaging", "preventive", "inpatient"]);
+    expect(d.referralRequired).toBe(false);
+    expect(d.excluded).toEqual(["Cosmetic surgery", "Long-term care"]);
+  });
+
+  it("uses the combined x-ray and blood work row for labs when there is no lab row", () => {
+    const d = sanitize({ ...good, benefits: [{ service: "xray", text: "20% coinsurance", kind: "coinsurance", percent: 20, deductible_applies: true, page: 4 }] });
+    expect(d.rows!.find((r) => r.key === "labs")).toMatchObject({ kind: "coinsurance", percent: 20, page: 4 });
+    // A separate lab row wins.
+    const own = sanitize({ ...good, benefits: [{ service: "xray", text: "20%", kind: "coinsurance", percent: 20 }, { service: "labs", text: "No charge", kind: "free" }] });
+    expect(own.rows!.find((r) => r.key === "labs")!.kind).toBe("free");
+  });
+
+  it("feeds the rows into the engine plan, with card copays winning", () => {
+    const card = decodedToCard(sanitize(withRows));
+    const { plan } = cardPlan(card);
+    expect(plan.costSharing[BENEFIT.MENTAL_HEALTH]).toEqual({ kind: "copay", amount: 30, afterDeductible: false, unit: "visit" });
+    expect(plan.costSharing[BENEFIT.IMAGING]).toEqual({ kind: "coinsurance", rate: 0.2, afterDeductible: true });
+    expect(plan.costSharing[BENEFIT.INPATIENT]).toMatchObject({ kind: "copay", amount: 500, unit: "day", afterDeductible: true });
+    expect(plan.costSharing[BENEFIT.PRIMARY_CARE]).toMatchObject({ kind: "copay", amount: 25 });
+  });
+});

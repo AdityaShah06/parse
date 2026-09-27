@@ -20,20 +20,20 @@ export default function WhoPaid({ result }: { result: YearResult }) {
       <div className="flex items-baseline justify-between gap-3">
         <div>
           <div className="text-sm text-dim">You pay for care</div>
-          <div className="font-serif text-[2.1rem] sm:text-5xl text-red tabular leading-none mt-1">
+          <div className="font-serif text-[2.4rem] sm:text-6xl text-red tabular leading-none mt-1">
             <Money value={patientTotal} />
           </div>
         </div>
         <div className="text-right">
           <div className="text-sm text-dim">Your plan pays</div>
-          <div className="font-serif text-[2.1rem] sm:text-5xl text-blue tabular leading-none mt-1">
+          <div className="font-serif text-[2.4rem] sm:text-6xl text-blue tabular leading-none mt-1">
             <Money value={planTotal} />
           </div>
         </div>
       </div>
-      <div className={`relative h-2 mt-4 rounded-[2px] overflow-hidden ${total > 0 ? "bg-blue" : "bg-line"}`}>
+      <div className={`relative h-2 mt-5 rounded-full overflow-hidden ${total > 0 ? "bg-blue" : "bg-line"}`}>
         <motion.div
-          className="absolute inset-y-0 left-0 bg-red"
+          className="absolute inset-y-0 left-0 bg-red shadow-[0_0_16px] shadow-red/60"
           animate={{ width: `${you}%` }}
           transition={spring}
         />

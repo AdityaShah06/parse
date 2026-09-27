@@ -1,0 +1,4 @@
+{
+  "_fixture": "Hand-built to match the NPI Registry v2.1 error envelope (HTTP 200 with an Errors array).",
+  "Errors": [ { "description": "No valid search criteria provided", "field": "generic", "number": "04" } ]
+}

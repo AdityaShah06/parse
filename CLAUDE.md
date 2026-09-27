@@ -10,7 +10,7 @@ target user is a college student on a parent's plan who has never read their cov
   engine numbers to place a bar segment, but never to print a figure.
 - Do not modify `engine.ts` or `parse-cost-share.ts` without showing me the diff and
   a failing test first.
-- Ask before adding a dependency.
+- Add any dependency that makes the demo better. No need to ask.
 - No em dashes anywhere, code comments included.
 - When a number is estimated rather than verified, say so in the interface.
 
@@ -19,13 +19,17 @@ target user is a college student on a parent's plan who has never read their cov
 ```
 app/                    Next.js project root (run npm commands from here)
   app/                  routes, layout, globals.css
-  components/           Planner, AccumulatorBar, WhoPaid, PlanTable, EventList
+  components/           Planner (shell), one file per room, ui.tsx (icons, buttons, call cards)
   lib/engine.ts         the cost engine, and the only place money is computed
   lib/parse-cost-share.ts   grammar for the PUF cost-sharing strings
   lib/load-plans.ts     PUF rows to engine Plan objects
   lib/catalog.ts        the 43 plans, loaded once, plus usd() formatting
   lib/prices.ts         representative service prices. Most are placeholders.
   lib/scenarios.ts      personas and the ladder of unexpected care
+  lib/care.ts           Find care providers (offline set) and visit pricing via the engine
+  lib/guide.ts          Ask rules: crisis and medical screens, FAQ match, model text scrub
+  lib/kb/               knowledge base: people, Rx, FAQ, ambulance states (each row cited)
+  lib/brand.ts          the product name, in one place
   data/mo-plans.json    output of extract.sql, checked in (160 KB)
 data-raw/               the three CMS CSVs and extract.sql. CSVs are not in git.
 ```
@@ -34,7 +38,7 @@ data-raw/               the three CMS CSVs and extract.sql. CSVs are not in git.
 
 ```
 npm run dev        http://localhost:3000
-npm test           vitest, 17 tests
+npm test           vitest, 52 tests
 npm run typecheck  tsc --noEmit
 npm run build      production build
 ```
@@ -42,7 +46,8 @@ npm run build      production build
 ## Stack
 
 Next.js 16 (app router), React 19, Tailwind v4 (no config file, tokens live in
-`app/globals.css` under `@theme`), framer-motion for the bar springs and the FLIP
+`app/globals.css` under `@theme`, dark "obsidian" palette: coral is what you pay,
+blue is what the plan pays, green is the cheaper path), framer-motion for the bar springs and the FLIP
 table reorder, vitest. Fonts come from `next/font/google`, so the first build needs
 network access.
 
@@ -65,6 +70,9 @@ network access.
 
 - Most prices in `lib/prices.ts` are placeholders. Only the ambulance balance bill
   has a source.
+- Find care clinics in `lib/care.ts` are illustrative, with invented names, ratings
+  and review summaries. The two hospitals are real and carry no rating.
+  `/api/places` serves the same shape; swap in NPI Registry and Google Places there.
 - Premiums in `mo-plans.json` are quoted for a 30-year-old, before any tax credit,
   Boone County. The default selected plan is Catastrophic, which only people under
   30 can buy, so the two disagree.
@@ -87,9 +95,42 @@ with `NEXT_PUBLIC_`, and never read one from a client component.
 | `NEXT_PUBLIC_GOOGLE_MAPS_KEY` | Maps JavaScript API, drawing the map | Browser, restricted to allowed websites |
 | `CMS_MARKETPLACE_API_KEY` | In-network checks and premiums for marketplace plans | Server |
 
-`node scripts/gemini-check.mjs` and `node scripts/marketplace-probe.mjs` test the
+`node scripts/key-test.mjs` and `node scripts/marketplace-probe.mjs` test the
 keys. Gemini is only ever asked for JSON matching a schema, and the caller validates
 the result again. The AI reads and routes. It never computes money.
 
 The Gemini free tier may use submitted content to improve Google products, so the
 demo uses sample denial letters, never a real person's medical documents.
+
+## Frontend work: use the design skills
+
+The visual direction, palette, title grammar, voice and motion map live in `DESIGN.md`. Read it first.
+
+Any change to the interface (anything in `app/components`, `app/app/globals.css`,
+or a new screen) uses the skills in `.claude/skills/`:
+
+| Skill | Use it for |
+|---|---|
+| `impeccable` | Starting point for design work: `/impeccable audit`, `critique`, `polish`, `distill`, `animate` |
+| `emil-design-eng` | Motion decisions: whether to animate, easing, duration, press feedback |
+| `apple-design` | Springs, interruptible motion, translucent materials, type tracking |
+| `make-interfaces-feel-better` | Detail review: radii, shadows, hit areas, tabular numbers, icons |
+| `polish` | The final pass before a demo or a commit |
+| `distill` | When a screen feels cluttered |
+| `animation-vocabulary` | Naming an effect precisely |
+
+House rules where the skills overlap, so every session makes the same call:
+
+- Press feedback is `scale(0.96)`, on pointer-down, never below 0.95.
+- Enter and exit use ease-out (`cubic-bezier(0.23, 1, 0.32, 1)`), never ease-in.
+  UI motion stays under 300ms; springs default to no bounce, bounce only after a flick or drag.
+- Animate only `transform`, `opacity` and `filter`. Never `transition: all`.
+- Nothing seen many times a day animates (tabs, filters, keyboard actions). Stagger only first arrivals, 30 to 80ms apart.
+- Never enter from `scale(0)`; start at `0.95` with opacity 0. Exits are faster and smaller than enters.
+- Respect `prefers-reduced-motion`: cross-fade instead of move. No slow infinite loops near one cycle per 5 seconds.
+- Nested corners are concentric: outer radius = inner radius + padding.
+- Depth comes from a shadow ring, structure from borders.
+- Changing numbers use tabular figures. Headings balance, body text pretty.
+- Hit areas are at least 44px on touch, 40px on desktop.
+- Reviews use a Before / After / Why table.
+- Every dollar still comes from `lib/engine.ts`. Design passes never change a figure or its source.

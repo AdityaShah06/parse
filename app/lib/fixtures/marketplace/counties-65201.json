@@ -1,0 +1,10 @@
+{
+ "counties": [
+  {
+   "fips": "29019",
+   "name": "Boone County",
+   "state": "MO",
+   "zipcode": "65201"
+  }
+ ]
+}

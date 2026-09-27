@@ -1,0 +1,10 @@
+{
+ "counties": [
+  {
+   "fips": "06075",
+   "name": "San Francisco County",
+   "state": "CA",
+   "zipcode": "94103"
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+{
+  "_fixture": "Hand-built to match the documented NPI Registry API v2.1 response shape. The live registry was unreachable from this sandbox, so this is NOT a captured response and the NPI numbers are synthetic. Replace with a real capture of https://npiregistry.cms.hhs.gov/api/?version=2.1&enumeration_type=NPI-2&organization_name=University*&postal_code=65212&limit=50",
+  "result_count": 2,
+  "results": [
+    {
+      "created_epoch": "1146787200000",
+      "enumeration_type": "NPI-2",
+      "last_updated_epoch": "1700000000000",
+      "number": "1999999901",
+      "addresses": [
+        { "country_code": "US", "country_name": "United States", "address_purpose": "MAILING", "address_type": "DOM", "address_1": "PO BOX 7000", "city": "COLUMBIA", "state": "MO", "postal_code": "652057000", "telephone_number": "573-882-4141" },
+        { "country_code": "US", "country_name": "United States", "address_purpose": "LOCATION", "address_type": "DOM", "address_1": "1 HOSPITAL DR", "city": "COLUMBIA", "state": "MO", "postal_code": "652120001", "telephone_number": "573-882-4141" }
+      ],
+      "practiceLocations": [],
+      "basic": { "organization_name": "THE CURATORS OF THE UNIVERSITY OF MISSOURI", "organizational_subpart": "YES", "enumeration_date": "2006-05-05", "last_updated": "2023-11-14", "status": "A" },
+      "taxonomies": [
+        { "code": "282N00000X", "taxonomy_group": "", "desc": "General Acute Care Hospital", "state": "MO", "license": "", "primary": true }
+      ],
+      "identifiers": [],
+      "endpoints": [],
+      "other_names": [
+        { "organization_name": "UNIVERSITY HOSPITAL", "type": "Doing Business As", "code": "3" }
+      ]
+    },
+    {
+      "created_epoch": "1146787200000",
+      "enumeration_type": "NPI-2",
+      "last_updated_epoch": "1700000000000",
+      "number": "1999999902",
+      "addresses": [
+        { "country_code": "US", "country_name": "United States", "address_purpose": "LOCATION", "address_type": "DOM", "address_1": "1 HOSPITAL DR", "address_2": "DEPT OF RADIOLOGY", "city": "COLUMBIA", "state": "MO", "postal_code": "652120001", "telephone_number": "573-882-7000" }
+      ],
+      "basic": { "organization_name": "UNIVERSITY PHYSICIANS RADIOLOGY", "status": "A" },
+      "taxonomies": [
+        { "code": "261QR0200X", "desc": "Clinic/Center, Radiology", "primary": true }
+      ],
+      "other_names": []
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "total": 4,
+  "providers": [
+    {
+      "provider": {
+        "npi": "1336193002",
+        "name": "MARIKAY FITZPATRICK FAMILY MEDICINE NP",
+        "provider_type": "Individual",
+        "addresses": null,
+        "plans": null,
+        "specialties": [
+          "Nurse Practitioner",
+          "Nurse Practitioner: Family"
+        ],
+        "facility_types": [],
+        "Valid": false,
+        "accepting": "accepting",
+        "gender": "Female",
+        "sex": "Female",
+        "languages": [],
+        "taxonomy": "Nurse Practitioner",
+        "years": null,
+        "group_id": "e2e43a5f-bd98-4dfa-95d9-3641a33993f7"
+      },
+      "address": {
+        "street1": "1441 BRANDING AVE STE 310",
+        "street2": "",
+        "city": "DOWNERS GROVE",
+        "state": "IL",
+        "zipcode": "60515",
+        "phone": "6308291038"
+      },
+      "distance": 300.15663960377725
+    },
+    {
+      "provider": {
+        "npi": "1801806815",
+        "name": "LANA J SARGENT FAMILY MEDICINE",
+        "provider_type": "Individual",
+        "addresses": null,
+        "plans": null,
+        "specialties": [
+          "Nurse Practitioner"
+        ],
+        "facility_types": [],
+        "Valid": false,
+        "accepting": "accepting",
+        "gender": "Female",
+        "sex": "Female",
+        "languages": [
+          "English"
+        ],
+        "taxonomy": "Nurse Practitioner · Family",
+        "years": null,
+        "group_id": "509323fd-d689-4ed3-a2f4-42188d869e43"
+      },
+      "address": {
+        "street1": "1300 E MARSHALL ST",
+        "street2": "",
+        "city": "RICHMOND",
+        "state": "VA",
+        "zipcode": "23298",
+        "phone": "8048285323"
+      },
+      "distance": 811.3906421926532
+    },
+    {
+      "provider": {
+        "npi": "1942769013",
+        "name": "ANGELLA MAKAHA-LYO FAMILY MEDICINE",
+        "provider_type": "Individual",
+        "addresses": null,
+        "plans": null,
+        "specialties": [
+          "Family Medicine"
+        ],
+        "facility_types": [],
+        "Valid": false,
+        "accepting": "accepting",
+        "gender": "Female",
+        "sex": "Female",
+        "languages": [],
+        "taxonomy": "Family Medicine",
+        "years": null,
+        "group_id": "e80e1eb0-0389-4352-a5d0-d927f5abf920"
+      },
+      "address": {
+        "street1": "799 BLOOMFIELD AVE STE 201",
+        "street2": "",
+        "city": "VERONA",
+        "state": "NJ",
+        "zipcode": "07044",
+        "phone": "9737467050"
+      },
+      "distance": 964.536518825416
+    }
+  ]
+}

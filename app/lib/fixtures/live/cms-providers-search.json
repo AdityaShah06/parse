@@ -1,0 +1,92 @@
+{
+  "total": 16,
+  "providers": [
+    {
+      "provider": {
+        "npi": "1265545495",
+        "name": "Boone Hospital Center",
+        "provider_type": "Group",
+        "addresses": null,
+        "plans": null,
+        "specialties": [],
+        "facility_types": [],
+        "Valid": false,
+        "accepting": "unknown",
+        "gender": "unknown",
+        "sex": "unknown",
+        "languages": [],
+        "taxonomy": "Clinic/Center · Pain",
+        "years": null,
+        "group_id": "590164ae-d6eb-40d2-9f31-3790c646e7f5"
+      },
+      "address": {
+        "street1": "1600 E BROADWAY",
+        "street2": "",
+        "city": "COLUMBIA",
+        "state": "MO",
+        "zipcode": "65201",
+        "phone": "5738158000"
+      },
+      "distance": 0
+    },
+    {
+      "provider": {
+        "npi": "1417971953",
+        "name": "Boone Hospital Home Care & Hospice",
+        "provider_type": "Facility",
+        "addresses": null,
+        "plans": null,
+        "specialties": [],
+        "facility_types": [
+          "Other Services Providers",
+          "Hospitals and Facilities"
+        ],
+        "Valid": false,
+        "accepting": "unknown",
+        "gender": "unknown",
+        "sex": "unknown",
+        "languages": [],
+        "taxonomy": "Hospice Care, Community Based",
+        "years": null,
+        "group_id": "9b5bdb69-8e88-4750-acac-682b66d0fa19"
+      },
+      "address": {
+        "street1": "1605 E. BROADWAY",
+        "street2": "SUITE 250",
+        "city": "COLUMBIA",
+        "state": "MO",
+        "zipcode": "65201",
+        "phone": "5738750555"
+      },
+      "distance": 0
+    },
+    {
+      "provider": {
+        "npi": "1548734734",
+        "name": "Boone Hospital Center",
+        "provider_type": "Group",
+        "addresses": null,
+        "plans": null,
+        "specialties": [],
+        "facility_types": [],
+        "Valid": false,
+        "accepting": "unknown",
+        "gender": "unknown",
+        "sex": "unknown",
+        "languages": [],
+        "taxonomy": "Clinic/Center · Rehabilitation, Cardiac Facilities",
+        "years": null,
+        "group_id": "590164ae-d6eb-40d2-9f31-3790c646e7f5"
+      },
+      "address": {
+        "street1": "1600 E. BROADWAY",
+        "street2": "ADMINISTRATION",
+        "city": "COLUMBIA",
+        "state": "MO",
+        "zipcode": "65201",
+        "phone": "5738158000"
+      },
+      "distance": 0
+    }
+  ]
+}

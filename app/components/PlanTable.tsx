@@ -27,6 +27,8 @@ export default function PlanTable({
 
   // Keep the selected plan visible even when it ranks below the fold.
   const rows = ranked.map((r, i) => ({ r, rank: i + 1, c: lookup(r.plan) }));
+  // Layout ratio only: each row's bar is its year against the priciest year.
+  const widest = Math.max(1, ...ranked.map((r) => r.trueAnnualCost));
   const visible = showAll
     ? rows
     : rows.filter((row) => row.rank <= COLLAPSED || row.c.id === selectedId);
@@ -60,7 +62,7 @@ export default function PlanTable({
                   onClick={() => onSelect(c.id)}
                   aria-pressed={selected}
                   className={`w-full grid ${COLS} gap-x-3 items-center px-3 py-2 text-left border-l-[3px] ${
-                    selected ? "border-ink bg-surface" : "border-transparent hover:bg-surface/60"
+                    selected ? "border-blue bg-blue/[0.07]" : "border-transparent hover:bg-white/[0.03]"
                   }`}
                 >
                   <span className="font-mono text-[13px] text-dim tabular">{rank}</span>
@@ -71,6 +73,14 @@ export default function PlanTable({
                       {c.id === CHEAPEST_PREMIUM.id && " · lowest premium"}
                       {rank === 1 && " · cheapest year"}
                     </span>
+                    <span className="block h-[3px] mt-2 rounded-full bg-white/[0.05] overflow-hidden">
+                      <motion.span
+                        className={`block h-full rounded-full ${rank === 1 ? "bg-good" : "bg-gradient-to-r from-red/50 to-red"}`}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${(r.trueAnnualCost / widest) * 100}%` }}
+                        transition={{ type: "spring", stiffness: 120, damping: 22, delay: Math.min(rank, 12) * 0.03 }}
+                      />
+                    </span>
                   </span>
                   <span className="font-mono text-[13px] text-right tabular hidden sm:block">
                     {usd(r.annualPremium)}
@@ -78,7 +88,7 @@ export default function PlanTable({
                   <span className="font-mono text-[13px] text-right tabular hidden sm:block">
                     {usd(r.patientTotal)}
                   </span>
-                  <span className="font-mono text-[14px] text-right tabular text-red">
+                  <span className={`font-mono text-[14px] text-right tabular ${rank === 1 ? "text-good" : "text-red"}`}>
                     {usd(r.trueAnnualCost)}
                   </span>
                 </button>
@@ -91,7 +101,7 @@ export default function PlanTable({
       <button
         type="button"
         onClick={() => setShowAll((v) => !v)}
-        className="mt-3 text-sm text-blue underline underline-offset-4 decoration-line hover:decoration-blue"
+        className="mt-4 text-sm text-blue hover:text-ink transition-colors"
       >
         {showAll ? "Show the top plans only" : `Show all ${ranked.length} plans`}
       </button>

@@ -5,3 +5,7 @@ data-raw/duckdb.exe
 Claude outputs/
 extensions.txt
 .env*.local
+app/.cache/
+app/data/.cache/
+app/data/raw/
+app/data/api-samples/

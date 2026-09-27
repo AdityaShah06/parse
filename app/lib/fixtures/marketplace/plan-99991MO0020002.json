@@ -1,0 +1,453 @@
+{
+ "plan": {
+  "id": "99991MO0020002",
+  "name": "Show-Me Silver 4000 Copay",
+  "state": "MO",
+  "type": "HMO",
+  "metal_level": "Silver",
+  "issuer": {
+   "id": "99991",
+   "name": "Show-Me Mutual Health",
+   "state": "MO",
+   "toll_free": "1-800-555-0100",
+   "tty": "711",
+   "individual_url": "https://example.org/showme"
+  },
+  "premium": 412.37,
+  "premium_w_credit": 168.12,
+  "ehb_premium": 410.9,
+  "hsa_eligible": false,
+  "has_national_network": false,
+  "specialist_referral_required": true,
+  "quality_rating": {
+   "available": true,
+   "year": 2026,
+   "global_rating": 3,
+   "clinical_quality_management_rating": 3,
+   "enrollee_experience_rating": 2,
+   "plan_efficiency_rating": 4
+  },
+  "deductibles": [
+   {
+    "type": "Medical EHB Deductible",
+    "amount": 4000,
+    "csr": "Exchange variant (no CSR)",
+    "network_tier": "In-Network",
+    "family_cost": "Individual",
+    "individual": true,
+    "family": false,
+    "display_string": null
+   },
+   {
+    "type": "Medical EHB Deductible",
+    "amount": 8000,
+    "csr": "Exchange variant (no CSR)",
+    "network_tier": "In-Network",
+    "family_cost": "Family",
+    "individual": false,
+    "family": true,
+    "display_string": null
+   },
+   {
+    "type": "Drug EHB Deductible",
+    "amount": 250,
+    "csr": "Exchange variant (no CSR)",
+    "network_tier": "In-Network",
+    "family_cost": "Individual",
+    "individual": true,
+    "family": false,
+    "display_string": null
+   },
+   {
+    "type": "Medical EHB Deductible",
+    "amount": 8000,
+    "csr": "Exchange variant (no CSR)",
+    "network_tier": "Out-of-Network",
+    "family_cost": "Individual",
+    "individual": true,
+    "family": false,
+    "display_string": null
+   },
+   {
+    "type": "Medical EHB Deductible",
+    "amount": 800,
+    "csr": "87% AV Level Silver Plan CSR",
+    "network_tier": "In-Network",
+    "family_cost": "Individual",
+    "individual": true,
+    "family": false,
+    "display_string": null
+   }
+  ],
+  "moops": [
+   {
+    "type": "Maximum Out of Pocket for Medical and Drug EHB Benefits (Total)",
+    "amount": 9200,
+    "csr": "Exchange variant (no CSR)",
+    "network_tier": "In-Network",
+    "family_cost": "Individual",
+    "individual": true,
+    "family": false
+   },
+   {
+    "type": "Maximum Out of Pocket for Medical and Drug EHB Benefits (Total)",
+    "amount": 18400,
+    "csr": "Exchange variant (no CSR)",
+    "network_tier": "In-Network",
+    "family_cost": "Family",
+    "individual": false,
+    "family": true
+   },
+   {
+    "type": "Maximum Out of Pocket for Medical and Drug EHB Benefits (Total)",
+    "amount": 3200,
+    "csr": "87% AV Level Silver Plan CSR",
+    "network_tier": "In-Network",
+    "family_cost": "Individual",
+    "individual": true,
+    "family": false
+   }
+  ],
+  "benefits": [
+   {
+    "name": "Primary Care Visit to Treat an Injury or Illness",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Not Applicable",
+      "coinsurance_rate": 0,
+      "copay_amount": 30,
+      "copay_options": "Copay before deductible",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "$30"
+     },
+     {
+      "coinsurance_options": "Coinsurance after deductible",
+      "coinsurance_rate": 0.5,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "Out-of-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "50% Coinsurance after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Specialist Visit",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Not Applicable",
+      "coinsurance_rate": 0,
+      "copay_amount": 75,
+      "copay_options": "Copay before deductible",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "$75"
+     },
+     {
+      "coinsurance_options": "Coinsurance after deductible",
+      "coinsurance_rate": 0.5,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "Out-of-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "50% Coinsurance after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Preventive Care/Screening/Immunization",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "No Charge",
+      "coinsurance_rate": 0,
+      "copay_amount": 0,
+      "copay_options": "No Charge",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "No Charge"
+     },
+     {
+      "coinsurance_options": "Coinsurance after deductible",
+      "coinsurance_rate": 0.5,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "Out-of-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "50% Coinsurance after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Urgent Care Centers or Facilities",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Not Applicable",
+      "coinsurance_rate": 0,
+      "copay_amount": 75,
+      "copay_options": "Copay before deductible",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "$75"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Emergency Room Services",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Coinsurance after deductible",
+      "coinsurance_rate": 0.3,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "30% Coinsurance after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Emergency Transportation/Ambulance",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Coinsurance after deductible",
+      "coinsurance_rate": 0.3,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "30% Coinsurance after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Imaging (CT/PET Scans, MRIs)",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Coinsurance after deductible",
+      "coinsurance_rate": 0.3,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "30% Coinsurance after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "X-rays and Diagnostic Imaging",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Coinsurance after deductible",
+      "coinsurance_rate": 0.3,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "30% Coinsurance after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Laboratory Outpatient and Professional Services",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Not Applicable",
+      "coinsurance_rate": 0,
+      "copay_amount": 0,
+      "copay_options": "No Charge",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "No Charge"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Generic Drugs",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Not Applicable",
+      "coinsurance_rate": 0,
+      "copay_amount": 15,
+      "copay_options": "Copay before deductible",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "$15"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": true,
+    "limit_unit": "Days per Month",
+    "limit_quantity": 30
+   },
+   {
+    "name": "Preferred Brand Drugs",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Not Applicable",
+      "coinsurance_rate": 0,
+      "copay_amount": 60,
+      "copay_options": "Copay after deductible",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "$60 Copay after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Specialty Drugs",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Coinsurance after deductible",
+      "coinsurance_rate": 0.4,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "40% Coinsurance after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Inpatient Hospital Services (e.g., Hospital Stay)",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Not Applicable",
+      "coinsurance_rate": 0,
+      "copay_amount": 500,
+      "copay_options": "Copay per Day after deductible",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "$500 Copay per Day after deductible for the first 5 days"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Inpatient Physician and Surgical Services",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Coinsurance after deductible",
+      "coinsurance_rate": 0.3,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "30% Coinsurance after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Outpatient Surgery Physician/Surgical Services",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Coinsurance after deductible",
+      "coinsurance_rate": 0.3,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "30% Coinsurance after deductible"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Mental/Behavioral Health Outpatient Services",
+    "covered": true,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Not Applicable",
+      "coinsurance_rate": 0,
+      "copay_amount": 30,
+      "copay_options": "Copay before deductible",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "$30"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "",
+    "has_limits": false
+   },
+   {
+    "name": "Chiropractic Care",
+    "covered": false,
+    "cost_sharings": [
+     {
+      "coinsurance_options": "Not Applicable",
+      "coinsurance_rate": 0,
+      "copay_amount": 0,
+      "copay_options": "Not Applicable",
+      "network_tier": "In-Network",
+      "csr": "Exchange variant (no CSR)",
+      "display_string": "Not Covered"
+     }
+    ],
+    "explanation": "",
+    "exclusions": "Not covered",
+    "has_limits": false
+   }
+  ],
+  "benefits_url": "https://example.org/showme/silver/benefits",
+  "brochure_url": "https://example.org/showme/silver/sbc.pdf",
+  "formulary_url": "https://example.org/showme/formulary",
+  "network_url": "https://example.org/showme/network"
+ }
+}

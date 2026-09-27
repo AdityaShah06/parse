@@ -1,0 +1,25 @@
+[
+ {
+  "rxcui": "617310",
+  "name": "atorvastatin 20 MG Oral Tablet",
+  "strength": "20 MG",
+  "route": "Oral Pill",
+  "full_name": "atorvastatin calcium 20 MG Oral Tablet",
+  "rxterms_dose_form": "Tab",
+  "rxnorm_dose_form": "Oral Tablet"
+ },
+ {
+  "rxcui": "617312",
+  "name": "atorvastatin 40 MG Oral Tablet",
+  "strength": "40 MG",
+  "route": "Oral Pill",
+  "full_name": "atorvastatin calcium 40 MG Oral Tablet"
+ },
+ {
+  "rxcui": "617318",
+  "name": "Lipitor 20 MG Oral Tablet",
+  "strength": "20 MG",
+  "route": "Oral Pill",
+  "full_name": "atorvastatin 20 MG Oral Tablet [Lipitor]"
+ }
+]

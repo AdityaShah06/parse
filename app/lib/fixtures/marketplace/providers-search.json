@@ -1,0 +1,63 @@
+{
+ "providers": [
+  {
+   "provider": {
+    "npi": "1234567893",
+    "name": "Example Family Medicine Clinic",
+    "type": "Facility",
+    "specialties": [
+     "Family Medicine"
+    ],
+    "accepting": "accepting",
+    "facility_types": [
+     "Clinic"
+    ]
+   },
+   "address": {
+    "street_1": "1101 Hospital Dr",
+    "city": "Columbia",
+    "state": "MO",
+    "zipcode": "65201"
+   },
+   "distance": 1.2
+  },
+  {
+   "provider": {
+    "npi": "1245319599",
+    "name": "Jordan A Rivera",
+    "type": "Individual",
+    "specialties": [
+     "Internal Medicine"
+    ],
+    "accepting": "accepting",
+    "gender": "Female"
+   },
+   "address": {
+    "street_1": "1101 Hospital Drive",
+    "street_2": "Suite 200",
+    "city": "Columbia",
+    "state": "MO",
+    "zipcode": "65201"
+   },
+   "distance": 1.2
+  },
+  {
+   "provider": {
+    "npi": "1003000126",
+    "name": "Example Urgent Care North",
+    "type": "Facility",
+    "specialties": [
+     "Urgent Care"
+    ],
+    "accepting": "unknown"
+   },
+   "address": {
+    "street_1": "2500 Range Line St",
+    "city": "Columbia",
+    "state": "MO",
+    "zipcode": "65202"
+   },
+   "distance": 3.4
+  }
+ ]
+}

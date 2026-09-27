@@ -1,0 +1,21 @@
+{
+ "coverage": [
+  {
+   "rxcui": "617310",
+   "plan_id": "99991MO0020002",
+   "coverage": "Covered",
+   "generic_rxcui": ""
+  },
+  {
+   "rxcui": "617312",
+   "plan_id": "99991MO0020002",
+   "coverage": "Covered"
+  },
+  {
+   "rxcui": "617318",
+   "plan_id": "99991MO0020002",
+   "coverage": "GenericCovered",
+   "generic_rxcui": "617310"
+  }
+ ]
+}

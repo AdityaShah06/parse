@@ -23,6 +23,8 @@ export type CardInput = {
   copays: Partial<Record<CopayKey, number>>;
   /** Copays the plan's summary says apply only after the deductible. */
   copaysAfterDeductible?: Partial<Record<CopayKey, boolean>>;
+  /** Every other benefit row read from the document, keyed by engine benefit name. The five card copays win on conflict. */
+  rows?: Record<string, CostShare>;
 };
 
 export const emptyCard = (): CardInput => ({
@@ -108,7 +110,7 @@ export function cardPlan(card: CardInput): CardPlan {
     monthlyPremium: card.monthlyPremium ?? 0,
   });
 
-  const costSharing: Record<string, CostShare> = {};
+  const costSharing: Record<string, CostShare> = { ...(card.rows ?? {}) };
   for (const [key, amount] of Object.entries(card.copays) as [CopayKey, number][]) {
     if (typeof amount === "number" && Number.isFinite(amount)) {
       costSharing[COPAY_BENEFIT[key]] = {

@@ -16,6 +16,7 @@ import {
 import { usd } from "@/lib/catalog";
 import { Scanner } from "./DecodePlan";
 import SampleBadge from "./SampleBadge";
+import { CallCard, RoomHeader } from "./ui";
 
 const READING = ["Reading the denial", "Finding the reason", "Looking for codes", "Finding the deadline"];
 
@@ -60,7 +61,7 @@ function Upload({ onDenial }: { onDenial: (d: Denial) => void }) {
           const f = e.dataTransfer.files?.[0];
           if (f) send(f);
         }}
-        className="w-full rounded-[18px] border-2 border-dashed border-line bg-surface px-5 py-7 text-left hover:border-ink transition-colors"
+        className="w-full rounded-[22px] border-2 border-dashed border-line-strong bg-white/[0.02] px-6 py-9 text-left hover:border-blue/60 transition-colors"
       >
         <span className="font-serif text-2xl block">Drop the denial letter or explanation of benefits</span>
         <span className="text-[13px] text-dim">PDF or a photo. Read once, never stored.</span>
@@ -83,7 +84,7 @@ function Upload({ onDenial }: { onDenial: (d: Denial) => void }) {
       <button
         type="button"
         onClick={() => onDenial(SAMPLE_DENIAL)}
-        className="min-h-11 px-5 rounded-full bg-ink text-surface text-[15px]"
+        className="min-h-11 px-5 rounded-full bg-ink text-paper hover:bg-white text-[15px]"
       >
         See an example denial
       </button>
@@ -97,9 +98,9 @@ function Card({ title, children, delay = 0 }: { title: string; children: React.R
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.35, ease: "easeOut" }}
-      className="rounded-[20px] border border-line bg-surface/80 p-5"
+      className="card p-5 sm:p-6"
     >
-      <h3 className="text-[13px] text-dim mb-3">{title}</h3>
+      <h3 className="eyebrow mb-3">{title}</h3>
       {children}
     </motion.section>
   );
@@ -122,16 +123,12 @@ export default function DeniedRoom({ planSelfFunded = null }: { planSelfFunded?:
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h2 className="font-serif text-3xl">Claim denied?</h2>
-          <p className="text-sm text-dim mt-1 max-w-xl">
-            Marketplace insurers denied 19% of in-network claims in 2024, and fewer than 1% of those
-            denials were appealed. About a third of appeals won (KFF). Here is what to do with yours.
-          </p>
-        </div>
-        {denial?.source === "sample" && <SampleBadge label="Example letter" />}
-      </div>
+      <RoomHeader
+        eyebrow="Denied?"
+        title="A denial is a first answer, not the last one."
+        lede="Marketplace insurers denied 19% of in-network claims in 2024, and fewer than 1% of those denials were appealed. About a third of appeals won (KFF). Here is what to do with yours."
+        aside={denial?.source === "sample" ? <SampleBadge label="Example letter" /> : undefined}
+      />
 
       {!denial ? (
         <Upload
@@ -145,7 +142,7 @@ export default function DeniedRoom({ planSelfFunded = null }: { planSelfFunded?:
         <div className="grid gap-4 xl:grid-cols-2">
           <Card title="What they said">
             <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="rounded-full bg-ink text-surface text-[13px] px-3 py-1">{KIND_LABEL[denial.kind]}</span>
+              <span className="rounded-full bg-red/15 border border-red/40 text-red text-[13px] px-3 py-1">{KIND_LABEL[denial.kind]}</span>
               {denial.codes.map((c) => (
                 <span key={c} className="rounded-full border border-line font-mono text-[12px] px-2.5 py-1">{c}</span>
               ))}
@@ -189,21 +186,11 @@ export default function DeniedRoom({ planSelfFunded = null }: { planSelfFunded?:
           </Card>
 
           <Card title="Who to call" delay={0.24}>
-            <ul className="space-y-3">
+            <div className="space-y-2.5">
               {whoToCall(denial).map((p) => (
-                <li key={p.id}>
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <span className="text-[15px]">{p.name}</span>
-                    {p.phone && (
-                      <a href={`tel:${p.phone.replace(/\D/g, "")}`} className="font-mono text-[14px] underline underline-offset-4">
-                        {p.phone}
-                      </a>
-                    )}
-                  </div>
-                  <p className="text-[13px] text-dim">{p.when}</p>
-                </li>
+                <CallCard key={p.id} person={p} />
               ))}
-            </ul>
+            </div>
           </Card>
 
           <div className="xl:col-span-2">
@@ -214,14 +201,14 @@ export default function DeniedRoom({ planSelfFunded = null }: { planSelfFunded?:
                   onChange={(e) => { setName(e.target.value); setEdited(null); }}
                   placeholder="Your name"
                   aria-label="Your name"
-                  className="min-h-11 rounded-full border border-line bg-surface px-4 outline-none focus:border-ink"
+                  className="min-h-11 rounded-full border border-line bg-white/[0.04] px-4 outline-none focus:border-blue/70"
                 />
                 <input
                   value={memberId}
                   onChange={(e) => { setMemberId(e.target.value); setEdited(null); }}
                   placeholder="Member ID from your card"
                   aria-label="Member ID"
-                  className="min-h-11 rounded-full border border-line bg-surface px-4 outline-none focus:border-ink"
+                  className="min-h-11 rounded-full border border-line bg-white/[0.04] px-4 outline-none focus:border-blue/70"
                 />
               </div>
               <textarea
@@ -229,20 +216,20 @@ export default function DeniedRoom({ planSelfFunded = null }: { planSelfFunded?:
                 onChange={(e) => setEdited(e.target.value)}
                 rows={16}
                 aria-label="Appeal letter"
-                className="w-full rounded-[14px] border border-line bg-paper p-4 font-mono text-[13px] leading-relaxed outline-none focus:border-ink"
+                className="w-full rounded-[16px] border border-line bg-black/30 p-4 font-mono text-[13px] leading-relaxed outline-none focus:border-blue/70"
               />
               <div className="flex flex-wrap gap-2 mt-3">
                 <button
                   type="button"
                   onClick={() => navigator.clipboard?.writeText(letter)}
-                  className="min-h-10 px-4 rounded-full border border-line bg-surface hover:border-ink text-[14px]"
+                  className="min-h-10 px-4 rounded-full border border-line bg-white/[0.03] hover:border-line-strong text-[14px]"
                 >
                   Copy letter
                 </button>
                 <a
                   href={`data:text/plain;charset=utf-8,${encodeURIComponent(letter)}`}
                   download="appeal-letter.txt"
-                  className="min-h-10 px-4 inline-flex items-center rounded-full border border-line bg-surface hover:border-ink text-[14px]"
+                  className="min-h-10 px-4 inline-flex items-center rounded-full border border-line bg-white/[0.03] hover:border-line-strong text-[14px]"
                 >
                   Download
                 </a>

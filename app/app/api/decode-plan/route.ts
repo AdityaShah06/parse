@@ -33,6 +33,7 @@ export async function POST(req: Request) {
     const raw = await extractJson({
       system: EXTRACT_SYSTEM,
       schema: EXTRACT_SCHEMA,
+      maxTokens: 8000,
       parts: [
         { inline_data: { mime_type: "application/pdf", data: bytes.toString("base64") } },
         { text: "Record this plan's in-network costs for one person." },

@@ -1,0 +1,26 @@
+{
+  "_fixture": "Hand-built to match the documented NPI Registry API v2.1 response shape. NOT a captured response; NPI numbers are synthetic.",
+  "result_count": 2,
+  "results": [
+    {
+      "enumeration_type": "NPI-2",
+      "number": 1999999903,
+      "addresses": [
+        { "address_purpose": "LOCATION", "address_1": "1600 E BROADWAY", "city": "COLUMBIA", "state": "MO", "postal_code": "652015844", "telephone_number": "573-815-8000" }
+      ],
+      "basic": { "organization_name": "BOONE HOSPITAL CENTER", "status": "A" },
+      "taxonomies": [ { "code": "282N00000X", "desc": "General Acute Care Hospital", "primary": true } ],
+      "other_names": []
+    },
+    {
+      "enumeration_type": "NPI-2",
+      "number": "1999999904",
+      "addresses": [
+        { "address_purpose": "LOCATION", "address_1": "1605 E BROADWAY", "address_2": "STE 300", "city": "COLUMBIA", "state": "MO", "postal_code": "65201", "telephone_number": "573-815-3000" }
+      ],
+      "basic": { "organization_name": "BOONE MEDICAL GROUP, LLC", "status": "A" },
+      "taxonomies": [ { "code": "207Q00000X", "desc": "Family Medicine", "primary": true } ],
+      "other_names": []
+    }
+  ]
+}

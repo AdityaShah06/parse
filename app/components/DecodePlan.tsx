@@ -33,14 +33,14 @@ export function Scanner({ lines = READING_LINES }: { lines?: string[] }) {
   }, [lines.length]);
   return (
     <div className="flex items-center gap-5" role="status" aria-live="polite">
-      <div className="relative w-[74px] h-[96px] rounded-[6px] border border-ink/70 bg-surface overflow-hidden shrink-0">
+      <div className="relative w-[74px] h-[96px] rounded-[6px] border border-line-strong bg-white/[0.03] overflow-hidden shrink-0">
         {Array.from({ length: 9 }).map((_, i) => (
           <motion.div
             key={i}
             className="absolute left-2 h-[3px] rounded-full bg-line"
             style={{ top: 10 + i * 9, width: i % 3 === 0 ? 40 : 54 }}
             initial={{ opacity: 0.35 }}
-            animate={{ opacity: [0.35, 1, 0.35], backgroundColor: ["#c4d4de", "#17688e", "#c4d4de"] }}
+            animate={{ opacity: [0.35, 1, 0.35], backgroundColor: ["rgba(255,255,255,0.12)", "#5eb0ff", "rgba(255,255,255,0.12)"] }}
             transition={{ duration: 2.2, repeat: Infinity, delay: i * 0.22 }}
           />
         ))}
@@ -117,7 +117,7 @@ export function DecodeAsk({ dispatch }: { dispatch: Dispatch<Action> }) {
           if (f) send(f);
         }}
         className={`w-full rounded-[18px] border-2 border-dashed px-5 py-6 text-left transition-colors ${
-          drag ? "border-blue bg-blue/5" : "border-line bg-surface hover:border-ink"
+          drag ? "border-blue bg-blue/10" : "border-line-strong bg-white/[0.02] hover:border-blue/60"
         }`}
       >
         <span className="font-serif text-2xl block">Drop your plan&rsquo;s PDF here</span>
@@ -145,7 +145,7 @@ export function DecodeAsk({ dispatch }: { dispatch: Dispatch<Action> }) {
           type="button"
           whileTap={{ scale: 0.96 }}
           onClick={() => dispatch({ type: "typeCard" })}
-          className="min-h-11 px-4 rounded-full border border-line bg-surface hover:border-ink text-[15px]"
+          className="min-h-11 px-4 rounded-full border border-line bg-white/[0.03] hover:border-line-strong text-[15px]"
         >
           I&rsquo;ll type my card numbers
         </motion.button>
@@ -153,7 +153,7 @@ export function DecodeAsk({ dispatch }: { dispatch: Dispatch<Action> }) {
           type="button"
           whileTap={{ scale: 0.96 }}
           onClick={() => dispatch({ type: "decoded", decoded: sampleDecoded(), label: "Show me an example plan" })}
-          className="min-h-11 px-4 rounded-full border border-line bg-surface hover:border-ink text-[15px]"
+          className="min-h-11 px-4 rounded-full border border-line bg-white/[0.03] hover:border-line-strong text-[15px]"
         >
           Use an example plan
         </motion.button>
@@ -225,16 +225,16 @@ export function ConfirmDecoded({ decoded, dispatch }: { decoded: Decoded; dispat
 
   return (
     <div className="space-y-4">
-      <div className="rounded-[16px] bg-ink text-surface px-4 py-3">
+      <div className="rounded-[16px] border border-blue/30 bg-blue/[0.07] px-4 py-3">
         <div className="font-serif text-xl leading-tight">{decoded.planName ?? "Your plan"}</div>
-        <div className="text-[13px] text-surface/70 mt-1">
+        <div className="text-[13px] text-dim mt-1">
           {[decoded.insurer, decoded.planType, decoded.network].filter(Boolean).join(" · ") || "Insurer not printed"}
         </div>
         {decoded.nurseLine && <div className="text-[13px] mt-2">Nurse line {decoded.nurseLine}</div>}
-        {decoded.source === "sample" && <div className="text-[12px] text-surface/60 mt-2">{SAMPLE_CITATION}</div>}
+        {decoded.source === "sample" && <div className="text-[12px] text-dim mt-2">{SAMPLE_CITATION}</div>}
       </div>
 
-      <ul className="divide-y divide-line rounded-[16px] border border-line bg-surface">
+      <ul className="divide-y divide-line rounded-[16px] border border-line bg-white/[0.02]">
         {rows.map((r, i) => (
           <motion.li
             key={r.key}
@@ -257,7 +257,7 @@ export function ConfirmDecoded({ decoded, dispatch }: { decoded: Decoded; dispat
                   placeholder="none"
                   onChange={(e) => setVals({ ...vals, [r.key]: e.target.value })}
                   size={Math.max(4, (vals[r.key] ?? "").length + 1)}
-                  className="bg-transparent text-right outline-none border-b border-transparent focus:border-blue placeholder:text-line placeholder:text-base"
+                  className="bg-transparent text-right outline-none border-b border-transparent focus:border-blue placeholder:text-faint placeholder:text-base"
                 />
                 {r.unit === "%" && <span className="text-dim ml-0.5">%</span>}
               </span>
@@ -278,7 +278,7 @@ export function ConfirmDecoded({ decoded, dispatch }: { decoded: Decoded; dispat
         type="button"
         whileTap={{ scale: 0.97 }}
         onClick={confirm}
-        className="min-h-11 px-5 rounded-full bg-ink text-surface text-[15px]"
+        className="min-h-11 px-5 rounded-full bg-ink text-paper hover:bg-white text-[15px]"
       >
         Looks right, run my year
       </motion.button>

@@ -1,0 +1,8 @@
+{
+  "_fixture": "Hand-built to match the documented Google API error envelope.",
+  "error": {
+    "code": 403,
+    "message": "Places API (New) has not been used in project 0 before or it is disabled.",
+    "status": "PERMISSION_DENIED"
+  }
+}

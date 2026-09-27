@@ -1,0 +1,100 @@
+{
+  "results": [],
+  "count": 0,
+  "schema": {
+    "8a80abf6-0a4d-5cf5-aa1e-9d10057641ba": {
+      "fields": {
+        "ndc_description": {
+          "type": "text",
+          "mysql_type": "text",
+          "description": "NDC Description"
+        },
+        "ndc": {
+          "type": "text",
+          "mysql_type": "text",
+          "description": "NDC"
+        },
+        "nadac_per_unit": {
+          "type": "numeric",
+          "precision": "10",
+          "scale": "5",
+          "mysql_type": "decimal",
+          "description": "NADAC Per Unit"
+        },
+        "effective_date": {
+          "type": "varchar",
+          "mysql_type": "date",
+          "description": "Effective Date"
+        },
+        "pricing_unit": {
+          "type": "text",
+          "mysql_type": "text",
+          "description": "Pricing Unit"
+        },
+        "pharmacy_type_indicator": {
+          "type": "text",
+          "mysql_type": "text",
+          "description": "Pharmacy Type Indicator"
+        },
+        "otc": {
+          "type": "text",
+          "mysql_type": "text",
+          "description": "OTC"
+        },
+        "explanation_code": {
+          "type": "text",
+          "mysql_type": "text",
+          "description": "Explanation Code"
+        },
+        "classification_for_rate_setting": {
+          "type": "text",
+          "mysql_type": "text",
+          "description": "Classification for Rate Setting"
+        },
+        "corresponding_generic_drug_nadac_per_unit": {
+          "type": "text",
+          "mysql_type": "text",
+          "description": "Corresponding Generic Drug NADAC Per Unit"
+        },
+        "corresponding_generic_drug_effective_date": {
+          "type": "varchar",
+          "mysql_type": "date",
+          "description": "Corresponding Generic Drug Effective Date"
+        },
+        "as_of_date": {
+          "type": "varchar",
+          "mysql_type": "date",
+          "description": "As of Date"
+        }
+      }
+    }
+  },
+  "query": {
+    "conditions": [
+      {
+        "property": "ndc_description",
+        "value": "%SERTRALINE 50%",
+        "operator": "like"
+      }
+    ],
+    "limit": 2,
+    "resources": [
+      {
+        "id": "8a80abf6-0a4d-5cf5-aa1e-9d10057641ba",
+        "alias": "t"
+      }
+    ],
+    "offset": 0,
+    "count": true,
+    "results": true,
+    "schema": true,
+    "keys": true,
+    "format": "json",
+    "rowIds": false,
+    "properties": [
+      "ndc_description",
+      "ndc",
+      "nadac_per_unit"
+    ]
+  }
+}

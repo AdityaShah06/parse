@@ -64,10 +64,10 @@ function Chip({
       aria-pressed={active || undefined}
       className={`min-h-11 px-4 rounded-full border text-[15px] transition-colors ${
         primary
-          ? "bg-ink text-surface border-ink"
+          ? "bg-ink text-paper border-ink hover:bg-white shadow-[0_8px_24px_-12px_rgb(255_255_255/0.4)]"
           : active
-            ? "bg-blue text-surface border-blue"
-            : "bg-surface border-line hover:border-ink"
+            ? "bg-blue/15 text-ink border-blue/70"
+            : "bg-white/[0.03] border-line hover:border-line-strong hover:bg-white/[0.06]"
       }`}
     >
       {children}
@@ -100,7 +100,7 @@ function NumberAsk({
         if (ok) onSubmit(n);
       }}
     >
-      <label className="flex items-center min-h-11 rounded-full border border-ink bg-surface pl-4 pr-3 focus-within:ring-2 focus-within:ring-blue/40">
+      <label className="flex items-center min-h-11 rounded-full border border-line-strong bg-white/[0.04] pl-4 pr-3 focus-within:border-blue/70">
         {prefix && <span className="text-dim mr-1">{prefix}</span>}
         <input
           ref={focus}
@@ -137,7 +137,7 @@ function CopayAsk({ onSubmit }: { onSubmit: (c: Partial<Record<CopayKey, number>
         {(Object.keys(COPAY_LABELS) as CopayKey[]).map((k) => (
           <label
             key={k}
-            className="flex items-center justify-between gap-2 rounded-[14px] border border-line bg-surface px-3 py-2 focus-within:border-ink"
+            className="flex items-center justify-between gap-2 rounded-[14px] border border-line bg-white/[0.03] px-3 py-2 focus-within:border-blue/70"
           >
             <span className="text-[13px] text-dim leading-tight">{COPAY_LABELS[k]}</span>
             <span className="flex items-center">
@@ -185,7 +185,7 @@ function ZipAsk({ onSubmit }: { onSubmit: (zip: string) => void }) {
           onChange={(e) => setV(e.target.value.replace(/\D/g, ""))}
           placeholder="ZIP code"
           aria-label="ZIP code"
-          className="min-h-11 w-36 rounded-full border border-ink bg-surface px-4 outline-none font-serif text-2xl tabular focus:ring-2 focus:ring-blue/40"
+          className="min-h-11 w-36 rounded-full border border-line-strong bg-white/[0.04] px-4 outline-none font-serif text-2xl tabular focus:border-blue/70"
         />
         <Chip primary onClick={() => ok && onSubmit(v)}>
           Continue
@@ -396,7 +396,7 @@ export function SurpriseControls({ p, dispatch, compact = false }: { p: Profile;
           value={p.month}
           onChange={(e) => dispatch({ type: "month", month: Number(e.target.value) })}
           disabled={p.surprise === 0}
-          className="min-h-11 border border-line bg-surface rounded-full px-4 disabled:opacity-50"
+          className="min-h-11 border border-line bg-surface rounded-full px-4 disabled:opacity-40"
         >
           {MONTHS.map((m, i) => (
             <option key={m} value={i + 1}>
@@ -441,6 +441,7 @@ export default function Concierge({
   year,
   estimatedCount,
   hero = false,
+  onClose,
 }: {
   p: Profile;
   dispatch: Dispatch<Action>;
@@ -448,6 +449,8 @@ export default function Concierge({
   estimatedCount: number;
   /** Centered on the landing screen before the visitor has answered. */
   hero?: boolean;
+  /** Collapses the guide once the year is built. */
+  onClose?: () => void;
 }) {
   // A short "thinking" beat between questions. Purely theatrical.
   const [thinking, setThinking] = useState(false);
@@ -470,8 +473,8 @@ export default function Concierge({
   return (
     <section
       aria-label="Concierge"
-      className={`flex flex-col rounded-[26px] border border-line bg-surface/90 backdrop-blur-sm shadow-[0_30px_80px_-40px_rgb(14_44_64/0.35)] ${
-        hero ? "h-[min(600px,72vh)]" : "lg:h-[calc(100vh-7rem)] lg:min-h-[620px]"
+      className={`card flex flex-col backdrop-blur-xl bg-surface/80 ${
+        hero ? "h-[min(540px,66vh)]" : "h-[min(540px,72vh)] lg:h-[calc(100vh-6.75rem)] lg:min-h-[560px]"
       }`}
     >
       <header className="flex items-center gap-3 px-5 py-4 border-b border-line">
@@ -480,15 +483,27 @@ export default function Concierge({
           <div className="font-serif text-xl leading-none">Your guide</div>
           <div className="text-[12px] text-dim mt-1">Plain English. Math from real 2026 plan rules.</div>
         </div>
-        {p.step !== "welcome" && (
-          <button
-            type="button"
-            onClick={() => dispatch({ type: "restart" })}
-            className="ml-auto text-[13px] text-dim underline underline-offset-4 decoration-line hover:text-ink"
-          >
-            Start over
-          </button>
-        )}
+        <div className="ml-auto flex items-center gap-3">
+          {p.step !== "welcome" && (
+            <button
+              type="button"
+              onClick={() => dispatch({ type: "restart" })}
+              className="whitespace-nowrap text-[13px] text-dim hover:text-ink transition-colors"
+            >
+              Start over
+            </button>
+          )}
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Hide the guide"
+              className="grid place-items-center size-8 rounded-full border border-line text-dim hover:text-ink hover:border-line-strong"
+            >
+              <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round"><path d="M15 6l-6 6 6 6" /></svg>
+            </button>
+          )}
+        </div>
       </header>
 
       <div ref={scroller} className="flex-1 overflow-y-auto px-5 py-5 space-y-4" aria-live="polite">
@@ -502,7 +517,7 @@ export default function Concierge({
               key={t.id}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              className="ml-auto w-fit max-w-[85%] rounded-[18px] rounded-br-[6px] bg-ink text-surface px-4 py-2 text-[15px]"
+              className="ml-auto w-fit max-w-[85%] rounded-[18px] rounded-br-[6px] bg-white/[0.08] border border-line text-ink px-4 py-2 text-[15px]"
             >
               {t.text}
             </motion.p>

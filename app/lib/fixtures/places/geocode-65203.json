@@ -1,0 +1,12 @@
+{
+  "_fixture": "Hand-built to match the documented Geocoding API JSON response. Coordinates are approximate.",
+  "results": [
+    {
+      "formatted_address": "Columbia, MO 65203, USA",
+      "geometry": { "location": { "lat": 38.9331, "lng": -92.3713 }, "location_type": "APPROXIMATE" },
+      "place_id": "ChIJfixtureZip65203",
+      "types": ["postal_code"]
+    }
+  ],
+  "status": "OK"
+}

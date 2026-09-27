@@ -1,0 +1,29 @@
+[
+  {
+    "rxcui": "259255",
+    "name": "Atorvastatin",
+    "strength": "80 mg",
+    "route": "Oral Pill",
+    "full_name": "atorvastatin 80 MG Oral Tablet",
+    "rxterms_dose_form": "Tab",
+    "rxnorm_dose_form": "Oral Tablet"
+  },
+  {
+    "rxcui": "2630760",
+    "name": "Atorvastatin",
+    "strength": "20 mg/5ml",
+    "route": "Oral Liquid",
+    "full_name": "atorvastatin 4 MG/ML Oral Suspension",
+    "rxterms_dose_form": "Susp",
+    "rxnorm_dose_form": "Oral Suspension"
+  },
+  {
+    "rxcui": "404011",
+    "name": "amLODIPine/Atorvastatin",
+    "strength": "5-80 mg",
+    "route": "Oral Pill",
+    "full_name": "amlodipine 5 MG / atorvastatin 80 MG Oral Tablet",
+    "rxterms_dose_form": "Tab",
+    "rxnorm_dose_form": "Oral Tablet"
+  }
+]

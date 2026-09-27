@@ -42,8 +42,8 @@ export default function EventList({
       {timeline.map((r, i) => (
         <li
           key={i}
-          className={`grid grid-cols-[3.25rem_1fr_4.75rem_4.75rem] sm:grid-cols-[3.75rem_1fr_6rem_6rem] gap-x-3 py-1.5 text-[14px] ${
-            unexpected.has(r.event) ? "bg-surface" : ""
+          className={`grid grid-cols-[3.25rem_1fr_4.75rem_4.75rem] sm:grid-cols-[3.75rem_1fr_6rem_6rem] gap-x-3 py-2 text-[14px] ${
+            unexpected.has(r.event) ? "bg-red/[0.06] -mx-2 px-2 rounded-lg" : ""
           }`}
         >
           <span className="font-mono text-[12px] text-dim pt-0.5 tabular">{when(r.event.date)}</span>

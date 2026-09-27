@@ -1,0 +1,100 @@
+{
+  "_fixture": "Hand-built to match the documented Places API (New) Text Search response for an Enterprise + Atmosphere field mask. Place IDs, reviews and summary text are invented. Not a captured response.",
+  "places": [
+    {
+      "id": "ChIJfixtureStadiumUrgent01",
+      "types": ["medical_clinic", "doctor", "health", "point_of_interest", "establishment"],
+      "nationalPhoneNumber": "(573) 555-0142",
+      "formattedAddress": "2325 W Stadium Blvd, Columbia, MO 65203, USA",
+      "location": { "latitude": 38.9406, "longitude": -92.3665 },
+      "rating": 4.4,
+      "googleMapsUri": "https://maps.google.com/?cid=1000000000000000001",
+      "websiteUri": "https://example.org/stadium-urgent-care",
+      "businessStatus": "OPERATIONAL",
+      "userRatingCount": 528,
+      "displayName": { "text": "Stadium Urgent Care", "languageCode": "en" },
+      "currentOpeningHours": {
+        "openNow": true,
+        "weekdayDescriptions": [
+          "Monday: 8:00 AM to 8:00 PM",
+          "Tuesday: 8:00 AM to 8:00 PM",
+          "Wednesday: 8:00 AM to 8:00 PM",
+          "Thursday: 8:00 AM to 8:00 PM",
+          "Friday: 8:00 AM to 8:00 PM",
+          "Saturday: 9:00 AM to 5:00 PM",
+          "Sunday: 9:00 AM to 5:00 PM"
+        ]
+      },
+      "primaryType": "medical_clinic",
+      "reviews": [
+        {
+          "name": "places/ChIJfixtureStadiumUrgent01/reviews/r1",
+          "relativePublishTimeDescription": "2 weeks ago",
+          "rating": 5,
+          "text": { "text": "In and out in 40 minutes with an X-ray.", "languageCode": "en" },
+          "originalText": { "text": "In and out in 40 minutes with an X-ray.", "languageCode": "en" },
+          "authorAttribution": { "displayName": "Sam R.", "uri": "https://www.google.com/maps/contrib/1", "photoUri": "https://lh3.googleusercontent.com/a/sam" },
+          "publishTime": "2026-09-10T15:00:00Z",
+          "flagContentUri": "https://www.google.com/local/review/rap/report?r1",
+          "googleMapsUri": "https://www.google.com/maps/reviews/r1"
+        },
+        {
+          "name": "places/ChIJfixtureStadiumUrgent01/reviews/r2",
+          "relativePublishTimeDescription": "a month ago",
+          "rating": 4,
+          "text": { "text": "Busy on Saturday evening but staff were kind.", "languageCode": "en" },
+          "authorAttribution": { "displayName": "Priya K.", "uri": "https://www.google.com/maps/contrib/2", "photoUri": "https://lh3.googleusercontent.com/a/priya" },
+          "publishTime": "2026-08-20T15:00:00Z"
+        },
+        {
+          "name": "places/ChIJfixtureStadiumUrgent01/reviews/r3",
+          "relativePublishTimeDescription": "2 months ago",
+          "rating": 3,
+          "text": { "text": "Long wait, good doctor.", "languageCode": "en" },
+          "authorAttribution": { "displayName": "Lee M.", "uri": "https://www.google.com/maps/contrib/3", "photoUri": "https://lh3.googleusercontent.com/a/lee" },
+          "publishTime": "2026-07-20T15:00:00Z"
+        },
+        {
+          "name": "places/ChIJfixtureStadiumUrgent01/reviews/r4",
+          "relativePublishTimeDescription": "3 months ago",
+          "rating": 5,
+          "text": { "text": "Stitches done fast.", "languageCode": "en" },
+          "authorAttribution": { "displayName": "Ana T.", "uri": "https://www.google.com/maps/contrib/4", "photoUri": "https://lh3.googleusercontent.com/a/ana" },
+          "publishTime": "2026-06-20T15:00:00Z"
+        }
+      ],
+      "reviewSummary": {
+        "text": { "text": "People say waits are short on weekdays and X-rays are done on site.", "languageCode": "en-US" },
+        "flagContentUri": "https://www.google.com/local/review/rap/report?summary1",
+        "disclosureText": { "text": "Summarized with Gemini", "languageCode": "en-US" },
+        "reviewsUri": "https://www.google.com/maps/place/?q=place_id:ChIJfixtureStadiumUrgent01&reviews"
+      }
+    },
+    {
+      "id": "ChIJfixtureBoone02",
+      "types": ["hospital", "health", "point_of_interest", "establishment"],
+      "nationalPhoneNumber": "(573) 815-8000",
+      "formattedAddress": "1600 E Broadway, Columbia, MO 65201, USA",
+      "location": { "latitude": 38.9492, "longitude": -92.313 },
+      "rating": 3.6,
+      "googleMapsUri": "https://maps.google.com/?cid=1000000000000000002",
+      "businessStatus": "OPERATIONAL",
+      "userRatingCount": 890,
+      "displayName": { "text": "Boone Hospital Center", "languageCode": "en" },
+      "regularOpeningHours": { "openNow": true, "weekdayDescriptions": ["Monday: Open 24 hours"] },
+      "primaryType": "hospital"
+    },
+    {
+      "id": "ChIJfixtureClosed03",
+      "formattedAddress": "10 Old Rd, Columbia, MO 65201, USA",
+      "location": { "latitude": 38.95, "longitude": -92.33 },
+      "businessStatus": "CLOSED_PERMANENTLY",
+      "displayName": { "text": "Closed Walk-In Clinic", "languageCode": "en" }
+    },
+    {
+      "id": "ChIJfixtureNoLocation04",
+      "formattedAddress": "Somewhere, Columbia, MO 65201, USA",
+      "displayName": { "text": "No Location Clinic", "languageCode": "en" }
+    }
+  ]
+}

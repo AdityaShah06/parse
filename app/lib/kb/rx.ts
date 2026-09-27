@@ -21,6 +21,8 @@ export type RxItem = KbRow & {
   cashSeller: string;
   /** How often people usually buy it, for the default frequency. */
   typically: "once" | "monthly" | "quarterly";
+  /** ACA preventive: covered at $0 in network on most plans (for example generic birth control). */
+  preventive?: boolean;
 };
 
 export const RX_SERVICE: Record<RxKind, string> = {
@@ -41,13 +43,18 @@ export const RX: RxItem[] = [
   row({ id: "amoxicillin", name: "Amoxicillin 500 mg", detail: "21 capsules, one course", kind: "generic", planPrice: 12, cashPrice: 7.5, cashSeller: "Pharmacy discount card", typically: "once" }),
   row({ id: "metformin", name: "Metformin 500 mg", detail: "Generic Glucophage, 60 tablets", kind: "generic", planPrice: 9, cashPrice: 4.1, cashSeller: "Online cash pharmacy", typically: "monthly" }),
   row({ id: "levothyroxine", name: "Levothyroxine 50 mcg", detail: "Generic Synthroid, 30 tablets", kind: "generic", planPrice: 16, cashPrice: 6.6, cashSeller: "Online cash pharmacy", typically: "monthly" }),
+  row({ id: "birth-control", name: "Norgestimate and ethinyl estradiol", detail: "Generic Sprintec, 28 tablets", kind: "generic", planPrice: 32, cashPrice: 9, cashSeller: "Online cash pharmacy", typically: "monthly", preventive: true }),
+  row({ id: "amphetamine-er", name: "Amphetamine salts ER 20 mg", detail: "Generic Adderall XR, 30 capsules", kind: "generic", planPrice: 180, cashPrice: 48, cashSeller: "Pharmacy discount card", typically: "monthly" }),
+  row({ id: "ondansetron", name: "Ondansetron 4 mg", detail: "Generic Zofran, 10 tablets", kind: "generic", planPrice: 22, cashPrice: 6, cashSeller: "Online cash pharmacy", typically: "once" }),
   row({ id: "albuterol", name: "Albuterol inhaler", detail: "Generic rescue inhaler, 1 inhaler", kind: "generic", planPrice: 60, cashPrice: 24, cashSeller: "Pharmacy discount card", typically: "quarterly" }),
   row({ id: "budesonide-formoterol", name: "Budesonide and formoterol inhaler", detail: "Generic Symbicort, 1 inhaler", kind: "brand", planPrice: 280, cashPrice: 95, cashSeller: "Online cash pharmacy", typically: "monthly" }),
   row({ id: "apixaban", name: "Eliquis 5 mg", detail: "Brand name, 60 tablets, no generic sold in the US yet", kind: "brand", planPrice: 560, cashPrice: 610, cashSeller: "Pharmacy discount card", typically: "monthly" }),
+  row({ id: "semaglutide", name: "Ozempic", detail: "Brand name, one pen, about a month", kind: "brand", planPrice: 1000, cashPrice: 499, cashSeller: "Manufacturer self-pay pharmacy", typically: "monthly" }),
   row({ id: "bmp", name: "Basic metabolic panel", detail: "Blood test", kind: "lab", planPrice: 45, cashPrice: 24, cashSeller: "Direct-to-consumer lab", typically: "once" }),
   row({ id: "lipid", name: "Lipid panel", detail: "Cholesterol blood test", kind: "lab", planPrice: 40, cashPrice: 19, cashSeller: "Direct-to-consumer lab", typically: "once" }),
   row({ id: "cbc", name: "Complete blood count", detail: "Blood test", kind: "lab", planPrice: 30, cashPrice: 15, cashSeller: "Direct-to-consumer lab", typically: "once" }),
   row({ id: "chest-xray", name: "Chest X-ray", detail: "Two views", kind: "xray", planPrice: 150, cashPrice: 60, cashSeller: "Cash-price imaging center", typically: "once" }),
+  row({ id: "knee-xray", name: "Knee X-ray", detail: "Three views", kind: "xray", planPrice: 150, cashPrice: 55, cashSeller: "Cash-price imaging center", typically: "once" }),
   row({ id: "mri-lumbar", name: "MRI, lower back", detail: "Lumbar spine, without contrast", kind: "imaging", planPrice: 1200, cashPrice: 450, cashSeller: "Cash-price imaging center", typically: "once" }),
   row({ id: "ct-head", name: "CT scan, head", detail: "Without contrast", kind: "imaging", planPrice: 1000, cashPrice: 350, cashSeller: "Cash-price imaging center", typically: "once" }),
 ];

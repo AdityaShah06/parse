@@ -29,25 +29,25 @@ changes room as you move through the path.
 | 1 | Welcome | ZIP, whose plan | Built | Real | |
 | 2 | Decode my plan | PDF of the Summary of Benefits, or card numbers, or sample | Built | Gemini + sample | |
 | 3 | My year | Who pays, the bar, the surprise slider, three futures | Built, futures to add | Real engine, placeholder prices | Sourced prices |
-| 4 | Find care | Map of providers, rating, review summary, in-network, cost per visit on your plan | To build | **Mock providers, labeled** | NPI Registry + Google Places + Marketplace API |
-| 5 | Ask the guide | Free-text questions. Refuses medical advice, routes to people | To build | Gemini | |
-| 6 | Denied? | Upload an EOB or denial letter: paperwork or real denial, deadline, appeal letter, who to call | To build | Gemini + sample letter | |
-| 7 | Family | Spouse and kids: which tier, or spouse keeps their own plan | To build | Mock premiums you type | Engine family deductible, tested |
+| 4 | Find care | Map of providers, rating, review summary, in-network, cost per visit on your plan, telehealth vs urgent care vs ER race | Built | Bundled Columbia set via /api/places | NPI Registry + Google Places + Marketplace API |
+| 5 | Ask the guide | Free-text questions. Refuses medical advice, routes to people | Built | Checked FAQ first, then Gemini via /api/ask | |
+| 6 | Denied? | Upload an EOB or denial letter: paperwork or real denial, deadline, appeal letter, who to call | Built | Gemini + sample letter | |
+| 7 | Family | Spouse and kids: which tier, or spouse keeps their own plan | On hold | Mock premiums you type | Engine family deductible, tested |
 | 8 | Taxes | HSA savings, subsidy clawback check, which 1095 form, free VITA help | To build | Mock, needs rubric | IRS figures |
-| 9 | Ambulance | State map plus the self-funded caveat | To build | Mock state list, labeled | Commonwealth Fund, each state checked |
+| 9 | Ambulance | State tile map, self-funded caveat, in vs out of network ride on your plan | Built | 23-state list as of Feb 2026, cited | Recheck yearly |
 | 10 | Compare plans | Every Missouri marketplace plan ranked by your year | Built | Real | Real premiums by age |
 
 ## Rules that do not bend
 
 - Dollars come only from `lib/engine.ts`. The AI never writes a dollar figure.
-- Anything mocked carries a visible "Sample data" badge until it is real. Nothing
-  fake ever claims a real clinic is in network.
+- Nothing fake ever claims a real clinic is in network. Real hospitals carry no
+  invented rating.
 - AI output is confirmed by the user before it touches the math.
 - The guide gives no medical advice and refuses when asked. Every answer ends with a
   person: nurse line, doctor, billing office, appeals team, Missouri DCI or the U.S.
   Department of Labor, VITA, 911, 988.
 - The demo must work with the wifi off: every AI and API feature has a sample path.
-- No em dashes. Ask before adding a dependency.
+- No em dashes. Add any dependency that makes the demo better.
 
 ## Who writes code
 
@@ -61,15 +61,16 @@ VS Code Auto Save, so a stale editor copy cannot overwrite a delivery.
 - [x] Engine, parser fix, data, tests
 - [x] Rooms 1, 2, 3 (core), 10
 - [x] **Shell.** Left guide, right stage, room tabs with transitions
-- [ ] **Room 4 Find care** on mock providers, with the map
-- [ ] **Room 5 Ask the guide** with the refusal layer and refusal tests
+- [x] **Room 4 Find care** on bundled providers, with the map and the cost race
+- [x] **Room 5 Ask the guide** with the refusal layer and refusal tests
 - [x] **Room 6 Denied?** example letter, deadline, who to call, appeal letter
 - [x] **Rx and tests** cash vs plan over the whole year, sample prices
 - [x] **Five doors**: employer, marketplace, student, Medicaid, uninsured
-- [ ] **Room 9 Ambulance** on a mock state list
-- [ ] **Room 7 Family** and **Room 8 Taxes** on mock numbers
+- [x] **Room 9 Ambulance** on the cited state list
+- [ ] **Room 7 Family** (on hold) and **Room 8 Taxes**
 - [ ] **Room 3** three futures
 - [ ] Swap mocks for real data, in this order: providers, ambulance states, prices, taxes
-- [ ] Design pass: the Rolls-Royce one
+- [x] Design pass: dark obsidian redesign, app shell with rail, top meter, phone tab bar
+- [ ] Live data: Google Places key, then swap /api/places
 - [ ] Ship checklist: Vercel, phone test, backup recording, interviews, Devpost with
       every AI tool cited, domain, three timed rehearsals

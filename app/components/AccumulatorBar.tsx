@@ -71,12 +71,12 @@ export default function AccumulatorBar({ result }: { result: YearResult }) {
 
   return (
     <div>
-      <div className="relative h-14 rounded-[3px] border border-line bg-surface overflow-hidden">
+      <div className="relative h-14 rounded-2xl border border-line bg-white/[0.02] overflow-hidden">
         {segments.map((s) => (
           <motion.div
             key={s.key}
             title={`${s.label}: ${usd(s.shown)}`}
-            className={`absolute top-0 bottom-0 border-r border-surface/70 ${s.breach ? "hatch" : "bg-red"}`}
+            className={`absolute top-0 bottom-0 border-r border-paper/60 ${s.breach ? "hatch" : "bg-gradient-to-b from-red to-[#e8664a]"}`}
             initial={{ left: `${pct(s.left)}%`, width: 0 }}
             animate={{ left: `${pct(s.left)}%`, width: `${pct(s.width)}%` }}
             transition={spring}
