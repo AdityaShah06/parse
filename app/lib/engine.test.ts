@@ -184,6 +184,43 @@ describe("applyEvent", () => {
   });
 });
 
+describe("coinsurance with a per-event cap", () => {
+  // SBCs print Rx tiers as "10% coinsurance up to $50": the percentage, but
+  // never more than the cap per fill.
+  const capped: Plan = {
+    ...PLAN,
+    costSharing: {
+      generic: { kind: "coinsurance", rate: 0.1, afterDeductible: false, maxPerEvent: 50 },
+      brand: { kind: "coinsurance", rate: 0.2, afterDeductible: true, maxPerEvent: 100 },
+    },
+  };
+  const fill = (serviceType: string, allowedAmount: number): CareEvent => ({ date: "2026-02-01", label: "Fill", serviceType, allowedAmount });
+
+  it("caps the coinsurance at the per-event maximum", () => {
+    // 10% of $1,200 is $120, capped at $50. Plan pays $1,150.
+    const r = applyEvent(emptyAccumulator(), fill("generic", 1200), capped);
+    expect(r.patientPays).toBe(50);
+    expect(r.planPays).toBe(1150);
+    expect(r.after.outOfPocketSpent).toBe(50);
+  });
+
+  it("leaves coinsurance under the cap alone", () => {
+    // 10% of $300 is $30, under the $50 cap.
+    const r = applyEvent(emptyAccumulator(), fill("generic", 300), capped);
+    expect(r.patientPays).toBe(30);
+  });
+
+  it("applies the deductible first; the cap only limits the coinsurance after it", () => {
+    // $3,000 fill, $2,000 deductible unmet: $2,000 to the deductible, then
+    // 20% of the other $1,000 is $200, capped at $100. Patient $2,100, plan $900.
+    const r = applyEvent(emptyAccumulator(), fill("brand", 3000), capped);
+    expect(r.toDeductible).toBe(2000);
+    expect(r.costShare).toBe(100);
+    expect(r.patientPays).toBe(2100);
+    expect(r.planPays).toBe(900);
+  });
+});
+
 describe("per-day copays", () => {
   it("multiplies a per-day copay by the length of stay", () => {
     // $1000/day, 4-day admission, deductible waived, allowed amount 30000.
