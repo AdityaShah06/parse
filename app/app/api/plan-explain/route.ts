@@ -18,7 +18,7 @@ export const maxDuration = 60;
 const SCHEMA = {
   type: "object",
   properties: {
-    headline: { type: "string", description: "One short sentence with a point of view: the plan's personality or its catch, dry and a little funny, like a tired actuary. Never just restate the plan name, metal level, type or premium. Under 12 words." },
+    headline: { type: "string", description: "One short sentence with a point of view: the plan's personality or its catch, dry and a little funny, like a tired actuary. The joke lands on the plan or the insurer, never on the person, their money or their health. Never just restate the plan name, metal level, type or premium. Under 12 words." },
     summary: { type: "string", description: "Two or three sentences: what kind of plan this is and how it behaves in a normal year and a bad year." },
     bestFor: { type: "string", description: "One sentence: who this plan works well for." },
     watchOut: { type: "string", description: "One sentence: the single biggest thing to be careful about." },
