@@ -1,4 +1,4 @@
-# Plainly design direction
+# Parse design direction
 
 Read this before touching any screen. It replaces every earlier visual direction
 (the cyanotype and the dark obsidian passes). `CLAUDE.md` still owns the rules
@@ -12,11 +12,11 @@ insurance; they watch it happen to a card, a receipt, a letter.
 
 ## What the references teach, and where we use it
 
-| Reference | The technique | Where it goes in Plainly |
+| Reference | The technique | Where it goes in Parse |
 |---|---|---|
 | Ramp | One physical object (their card) travels through every scene, and each scene has smaller animations inside it: an invoice building line by line, a chat bubble popping, a receipt attaching | Your insurance card is our traveling object. It is the hero, it flips to show your four numbers, it drops into the receipt, it slides into the plan comparison |
 | Ramp | Card titles: bold noun in ink, the rest in gray. "**Banking** that flows money to the highest return" | Every feature card title |
-| Ramp | A live ticker strip at the bottom of the hero | "Plainly, today" strip with honest numbers only (see below) |
+| Ramp | A live ticker strip at the bottom of the hero | "Parse, today" strip with honest numbers only (see below) |
 | Ramp | The AI prompt box *is* the call to action | The PDF dropzone and the Ask bar are the CTAs; no "Get started" buttons |
 | Oura | Two-word serif statements with periods. "Subtle. Power." A stat as the whole headline | Hero and section statements |
 | Oura | Warm cream, not white. Photography and objects carry the color | Base palette |
@@ -91,7 +91,7 @@ Rules from the skills still apply: press 0.96, ease-out under 300ms for UI,
 springs without bounce unless something was thrown, animate transform, opacity and
 filter only, reduced motion becomes cross-fades.
 
-## The "Plainly, today" strip
+## The "Parse, today" strip
 
 Only true numbers: 43 Missouri plans loaded, 23 states with ambulance
 protections, 1 in 5 marketplace claims denied (KFF), under 1% appealed (KFF),

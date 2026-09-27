@@ -6,6 +6,7 @@ import type { Room } from "@/lib/app-state";
 import { Icon } from "../ui";
 import { setTheme, useTheme } from "./theme";
 import { onVoice, setVoice, voiceOn } from "./voice";
+import { BRAND } from "@/lib/brand";
 
 export const ROOMS: { id: Room; label: string; line: string; icon: string }[] = [
   { id: "plan", label: "Your plan", line: "What you actually have", icon: "plan" },
@@ -76,7 +77,7 @@ export default function Wall({ room, go, restart }: { room: Room; go: (r: Room) 
                 exit={{ opacity: 0, x: -4, transition: { duration: 0.1 } }}
                 className="font-serif text-[22px] whitespace-nowrap"
               >
-                Plainly
+                {BRAND.name}
               </motion.span>
             )}
           </AnimatePresence>

@@ -116,7 +116,7 @@ export default function PlanShop({
       : !resp?.ok
         ? ["I couldn't reach HealthCare.gov's data.", "Check the CMS key, then try again."]
         : pick
-          ? [`${rows.length} plans in ${place}, each run through a normal year and a bad one.`, explain?.headline ?? `My pick: ${pick.p.name}.`]
+          ? ["Premiums lie. A bad year tells the truth.", explain?.headline ?? `My pick: ${pick.p.name}.`]
           : ["No plans came back for that ZIP."];
 
   return (
@@ -175,9 +175,11 @@ export default function PlanShop({
         <>
           <Hero r={pick} explain={explain} yours={yours} currentName={current?.name ?? null} onChoose={() => onChoose(pick.p, a)} />
           <div className="space-y-2">
-            <div className="flex items-baseline gap-3 pt-2">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 pt-2">
               <span className="font-medium text-[17px]">Every plan, ranked.</span>
-              <span className="text-dim text-[15px]">Tap one to see why it scored the way it did.</span>
+              <span className="text-dim text-[15px]">
+                {rows.length} plans in {place}, each run through a normal year and a bad one. Tap one to see why it scored the way it did.
+              </span>
             </div>
             {rows.slice(0, 25).map((r, i) => (
               <RankRow key={r.p.id} r={r} i={i} open={open === r.p.id} toggle={() => setOpen(open === r.p.id ? null : r.p.id)} onChoose={() => onChoose(r.p, a)} />

@@ -7,9 +7,10 @@ import Sphere from "./Sphere";
 import Kinetic from "./Kinetic";
 import { onVoice, setVoice, voiceOn } from "./voice";
 import { Icon } from "../ui";
+import { BRAND } from "@/lib/brand";
 
 const INTRO = [
-  "Hello. I'm Plainly.",
+  `Hello. I'm ${BRAND.name}.`,
   "I read health insurance so you don't have to.",
   "I don't check your pulse. I check your plan.",
   "Then I tell you what a year of being a person costs.",

@@ -92,7 +92,7 @@ export default function Agent({ my, events, zip, goCare }: { my: MyPlan; events:
       <div className="flex items-start gap-5">
         <Sphere size={92} mood={busy ? "thinking" : "calm"} night={night} className="shrink-0 max-sm:!w-16 max-sm:!h-16" />
         <div className="min-w-0 pt-1">
-          <Kinetic lines={["Ask me anything about your plan.", "I run the numbers. I don't guess them."]} size="lg" />
+          <Kinetic lines={["Ask me anything about your plan.", "I answer in receipts, not vibes."]} size="lg" />
         </div>
       </div>
 

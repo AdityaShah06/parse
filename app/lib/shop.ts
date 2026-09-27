@@ -153,5 +153,5 @@ export const SHOP_SOURCES = [
   "Plans and premiums: CMS Marketplace API (HealthCare.gov's own data).",
   "Quality stars: CMS Quality Rating System, via the same API.",
   `Claim denials: ${DENIALS_SOURCE.name}.`,
-  "Your costs: Plainly's engine, running a normal year and a bad year through each plan's rules.",
+  "Your costs: Parse's engine, running a normal year and a bad year through each plan's rules.",
 ];

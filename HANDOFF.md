@@ -1,13 +1,13 @@
-# Plainly: handoff (September 27, 2026)
+# Parse: handoff (September 27, 2026)
 
 Read this first. It replaces the older parts of `CLAUDE.md` (its layout section and
 test count are out of date; its working rules still apply).
 
-## What Plainly is
+## What Parse is
 
 A TigerHacks 2026 entry (Mizzou, health theme). It is an AI-forward health insurance
 app for a college student on a parent's plan. Upload your plan's Summary of Benefits
-(SBC) PDF, or pick a plan, and Plainly:
+(SBC) PDF, or pick a plan, and Parse:
 
 - reads the plan;
 - scores it;
@@ -87,7 +87,7 @@ Optional cleanup: remove the stale Windows variable in PowerShell with
 
 ## What is built (all in `app/`)
 
-**Rooms.** `components/plainly/Plainly.tsx` is the shell and `Wall.tsx` is the room
+**Rooms.** `components/plainly/Parse.tsx` is the shell and `Wall.tsx` is the room
 menu. Room state lives in `lib/app-state.ts`.
 
 - **Your plan** (`YourPlan.tsx`):
