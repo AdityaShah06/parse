@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { PROVIDERS } from "@/lib/care";
 import { NoPlacesKey, PlacesBudgetExhausted, PlacesHttpError, PlacesInputError, searchPlaces } from "@/lib/places";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -18,6 +19,8 @@ export const runtime = "nodejs";
  * ({ok:true, source:"bundled", places}) so the current Find care room keeps working.
  */
 export async function GET(req: Request) {
+  const limited = await rateLimit(req, "places");
+  if (limited) return limited;
   const q = new URL(req.url).searchParams;
   const category = q.get("category") ?? q.get("kind");
   const zip = q.get("zip") ?? undefined;

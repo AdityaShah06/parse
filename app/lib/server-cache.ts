@@ -20,6 +20,7 @@ import { createHash } from "node:crypto";
 import { promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { incr } from "./shared-store";
 
 type Entry = { at: number; ttl: number; value: unknown };
 
@@ -168,6 +169,14 @@ function saveLedger() {
  * spends nothing) when that would exceed `limit` for today.
  */
 export async function spend(name: string, limit: number, amount = 1): Promise<boolean> {
+  // Shared across instances when a store is connected; see lib/shared-store.ts.
+  const key = `budget:${name}:${today()}`;
+  const total = await incr(key, amount, 2 * 86_400);
+  if (total !== null) {
+    if (total <= limit) return true;
+    await incr(key, -amount, 2 * 86_400);
+    return false;
+  }
   const l = await loadLedger();
   const d = today();
   const row = l[name]?.day === d ? l[name] : { day: d, used: 0 };

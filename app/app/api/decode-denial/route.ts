@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
 import { ApiError, NoKey, extractJson } from "@/lib/llm";
 import { DENIAL_SCHEMA, DENIAL_SYSTEM, NotADenial, sanitizeDenial } from "@/lib/denial";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 // Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
 export const maxDuration = 60;
 
-const MAX_BYTES = 10 * 1024 * 1024;
+// Vercel functions reject request bodies over 4.5 MB, so stay under that everywhere.
+const MAX_BYTES = 4 * 1024 * 1024;
 
 function sniff(bytes: Buffer): string | null {
   if (bytes.subarray(0, 5).toString("latin1") === "%PDF-") return "application/pdf";
@@ -17,10 +19,12 @@ function sniff(bytes: Buffer): string | null {
 
 /** POST a denial letter or EOB (PDF, PNG or JPEG) as form field "file". Nothing is stored. */
 export async function POST(req: Request) {
+  const limited = await rateLimit(req, "decode");
+  if (limited) return limited;
   const form = await req.formData().catch(() => null);
   const file = form?.get("file");
   if (!(file instanceof File)) return NextResponse.json({ ok: false, code: "bad_request", error: "No file received." }, { status: 400 });
-  if (file.size > MAX_BYTES) return NextResponse.json({ ok: false, code: "too_big", error: "That file is over 10 MB." }, { status: 413 });
+  if (file.size > MAX_BYTES) return NextResponse.json({ ok: false, code: "too_big", error: "That file is over 4 MB." }, { status: 413 });
 
   const bytes = Buffer.from(await file.arrayBuffer());
   const mime = sniff(bytes);

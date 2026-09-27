@@ -235,3 +235,75 @@ export const SAMPLE_DENIAL: Denial = {
   selfFunded: null,
   source: "sample",
 };
+
+/** What the insurer's reason usually means, per kind, in plain words. */
+export const PLAIN_REASON: Record<DenialKind, string> = {
+  paperwork: "A billing mistake, not a judgment about your care. A wrong code or a missing number. The office can usually resend it.",
+  prior_auth: "Nobody asked the plan for permission before the service. That's usually the office's job, not yours.",
+  not_covered: "They say your plan excludes this. Check your plan summary: if it's listed as covered, they're wrong.",
+  medical_necessity: "A reviewer decided you didn't need it. Your doctor's letter is the strongest answer to that.",
+  out_of_network: "They say the provider wasn't in your network. If you didn't choose them, federal law often protects you.",
+  unclear: "They didn't say clearly why. You're allowed to make them explain.",
+};
+
+/**
+ * One sample letter per kind, all from the same made-up insurer, so the room
+ * can show how each reason reads and what to do. The CARC codes are the real
+ * standard codes for each reason. The amounts are what a letter would print,
+ * shown as the document's own numbers, not computed by the app.
+ */
+export const SAMPLE_DENIALS: Record<Exclude<DenialKind, "unclear">, Denial> = {
+  prior_auth: SAMPLE_DENIAL,
+  paperwork: {
+    ...SAMPLE_DENIAL,
+    claimNumber: "EHP-2026-0391552",
+    provider: "Broadway Urgent Care",
+    service: "Urgent care visit, level 3",
+    serviceDate: "2026-08-02",
+    noticeDate: "2026-08-29",
+    billed: 285,
+    denied: 285,
+    reasonQuote: "Claim/service lacks information or has submission/billing error(s).",
+    codes: ["CO-16", "N290"],
+    kind: "paperwork",
+  },
+  out_of_network: {
+    ...SAMPLE_DENIAL,
+    claimNumber: "EHP-2026-0402918",
+    provider: "Mid-Missouri Anesthesia Associates",
+    service: "Anesthesia for knee arthroscopy, at an in-network hospital",
+    serviceDate: "2026-07-14",
+    noticeDate: "2026-09-02",
+    billed: 2400,
+    denied: 2400,
+    reasonQuote: "Services not provided by network/primary care providers.",
+    codes: ["CO-242"],
+    kind: "out_of_network",
+  },
+  medical_necessity: {
+    ...SAMPLE_DENIAL,
+    claimNumber: "EHP-2026-0417730",
+    provider: "Tiger Physical Therapy",
+    service: "Physical therapy after ACL repair, visits 13 to 24",
+    serviceDate: "2026-08-11",
+    noticeDate: "2026-09-08",
+    billed: 1560,
+    denied: 1560,
+    reasonQuote: "These are non-covered services because this is not deemed a 'medical necessity' by the payer.",
+    codes: ["CO-50"],
+    kind: "medical_necessity",
+  },
+  not_covered: {
+    ...SAMPLE_DENIAL,
+    claimNumber: "EHP-2026-0385104",
+    provider: "Columbia Allergy and Asthma",
+    service: "Allergy skin testing, 40 allergens",
+    serviceDate: "2026-07-28",
+    noticeDate: "2026-08-20",
+    billed: 640,
+    denied: 640,
+    reasonQuote: "Non-covered charge(s). This service is not a covered benefit under the member's plan.",
+    codes: ["CO-96"],
+    kind: "not_covered",
+  },
+};

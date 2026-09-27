@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { drugsAutocomplete, drugsCovered, toHttpError } from "@/lib/marketplace";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -9,6 +10,8 @@ export const runtime = "nodejs";
  * from each insurer's machine-readable formulary.
  */
 export async function GET(req: Request) {
+  const limited = await rateLimit(req, "lookup");
+  if (limited) return limited;
   const u = new URL(req.url).searchParams;
   const planId = u.get("planId") ?? "";
   const q = (u.get("q") ?? "").trim();

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { matchPlaceToNpi, NpiBudgetExhausted, NpiHttpError } from "@/lib/npi";
 import { resolveCategory } from "@/lib/places";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -20,6 +21,8 @@ type Row = { id: string; npi: string | null; npiName: string | null; taxonomy: s
  * 429 {ok:false, code:"budget"} when the daily NPI budget ran out before any match finished
  */
 export async function POST(req: Request) {
+  const limited = await rateLimit(req, "places");
+  if (limited) return limited;
   let body: unknown;
   try {
     body = await req.json();

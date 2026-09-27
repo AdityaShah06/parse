@@ -3,6 +3,7 @@ import { ApiError, NoKey, extractJson } from "@/lib/llm";
 import { FAQ } from "@/lib/kb/faq";
 import { PEOPLE } from "@/lib/kb/people";
 import { FALLBACK_ANSWER, screen, scrubModelText } from "@/lib/guide";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 // Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
@@ -35,6 +36,8 @@ People you can route to (ids): ${PEOPLE_IDS.map((id) => `${id} = ${PEOPLE[id].na
 
 /** POST { q, selfFunded? }. Screened locally first; Gemini only for what is left. */
 export async function POST(req: Request) {
+  const limited = await rateLimit(req, "agent");
+  if (limited) return limited;
   const body = (await req.json().catch(() => null)) as { q?: unknown; selfFunded?: unknown } | null;
   const q = typeof body?.q === "string" ? body.q.slice(0, 600).trim() : "";
   if (!q) return NextResponse.json({ ok: false, code: "bad_request" }, { status: 400 });

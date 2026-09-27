@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { ApiError, NoKey, extractJson } from "@/lib/llm";
 import { EXTRACT_SCHEMA, EXTRACT_SYSTEM, NotAnSbc, sanitize } from "@/lib/decode";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 // Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
@@ -14,6 +15,8 @@ const MAX_BYTES = 4 * 1024 * 1024;
  * visitor to confirm. Nothing is stored: the file lives only in this request.
  */
 export async function POST(req: Request) {
+  const limited = await rateLimit(req, "decode");
+  if (limited) return limited;
   let file: File | null = null;
   try {
     const form = await req.formData();

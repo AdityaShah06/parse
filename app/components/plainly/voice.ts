@@ -137,7 +137,11 @@ function browserSpeak(text: string): Promise<void> {
     u.rate = 0.96;
     u.pitch = 0.9;
     const voices = window.speechSynthesis.getVoices();
-    const pick = voices.find((v) => /Samantha|Daniel|Google UK English Male|Serena|Alex/i.test(v.name)) ?? voices.find((v) => v.lang.startsWith("en"));
+    // Match the ElevenLabs voice: a woman, British first. Windows, Chrome and macOS names.
+    const pick =
+      voices.find((v) => /Google UK English Female|Microsoft (Libby|Sonia|Hazel)|Serena|Kate/i.test(v.name)) ??
+      voices.find((v) => /Samantha|Microsoft (Aria|Jenny|Zira)|Google US English/i.test(v.name)) ??
+      voices.find((v) => v.lang.startsWith("en"));
     if (pick) u.voice = pick;
     let on = true;
     const finish = () => {

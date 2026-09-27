@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { ATTRIBUTION, fillOptions, suggestDrugs } from "@/lib/pharmacy";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -23,6 +24,8 @@ function intParam(v: string | null, fallback: number, min: number, max: number):
 }
 
 export async function GET(req: Request) {
+  const limited = await rateLimit(req, "lookup");
+  if (limited) return limited;
   const params = new URL(req.url).searchParams;
 
   const suggest = params.get("suggest");

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { blobGet, blobSet, envLimit, spend } from "@/lib/server-cache";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 // Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
@@ -13,32 +14,30 @@ export const maxDuration = 60;
  * only ever sees audio. Responses are marked immutable so the browser and
  * Vercel's CDN cache every line: a rehearsed demo costs credits once.
  *
- * Optional: ELEVENLABS_VOICE_ID (default George, a calm narrator) and
- * ELEVENLABS_MODEL (default eleven_flash_v2_5, the lowest-latency model).
+ * Optional: ELEVENLABS_VOICE_ID (default Lily, a velvety British premade:
+ * the free plan can't use Voice Library or designed voices over the API),
+ * ELEVENLABS_MODEL (default eleven_multilingual_v2, the most expressive
+ * model that still answers fast; about one credit per character), and
+ * ELEVENLABS_STABILITY / ELEVENLABS_STYLE to tune the delivery.
  * With no key the route answers 503 and the page falls back to the
  * browser's own speech engine.
  */
 
-const DEFAULT_VOICE = "JBFqnCBsd6RMkjVDRZzb";
-const DEFAULT_MODEL = "eleven_flash_v2_5";
+const DEFAULT_VOICE = "pFZP5JQG7iQjIQuC4Bku";
+const DEFAULT_MODEL = "eleven_multilingual_v2";
+// Low stability and a strong style push: playful and a little smoky, not a newsreader.
+const DEFAULT_STABILITY = 0.3;
+const DEFAULT_STYLE = 0.55;
+
+function setting(name: string, fallback: number): number {
+  const n = Number(process.env[name]);
+  return Number.isFinite(n) && n >= 0 && n <= 1 ? n : fallback;
+}
 const MAX_CHARS = 280;
 
 // Per-instance memory: identical lines are never paid for twice while warm.
 const cache = new Map<string, ArrayBuffer>();
 const CACHE_LIMIT = 200;
-
-// A light fence so a public deploy can't be used to drain the account.
-const hits = new Map<string, { n: number; at: number }>();
-function limited(ip: string) {
-  const now = Date.now();
-  const h = hits.get(ip);
-  if (!h || now - h.at > 60_000) {
-    hits.set(ip, { n: 1, at: now });
-    return false;
-  }
-  h.n += 1;
-  return h.n > 40;
-}
 
 function clean(v: string | undefined) {
   return v?.trim().replace(/^["']|["']$/g, "") || undefined;
@@ -55,7 +54,11 @@ export async function GET(req: Request) {
 
   const voice = clean(process.env.ELEVENLABS_VOICE_ID) ?? DEFAULT_VOICE;
   const model = clean(process.env.ELEVENLABS_MODEL) ?? DEFAULT_MODEL;
-  const id = `${voice}|${model}|${text}`;
+  // eleven_v3 only accepts stability 0, 0.5 or 1.
+  const rawStability = setting("ELEVENLABS_STABILITY", DEFAULT_STABILITY);
+  const stability = model === "eleven_v3" ? Math.round(rawStability * 2) / 2 : rawStability;
+  const style = setting("ELEVENLABS_STYLE", DEFAULT_STYLE);
+  const id = `${voice}|${model}|${stability}|${style}|${text}`;
 
   const headers = {
     "Content-Type": "audio/mpeg",
@@ -72,9 +75,10 @@ export async function GET(req: Request) {
     return new Response(ab, { headers });
   }
 
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
-  if (limited(ip)) return NextResponse.json({ ok: false, code: "slow_down" }, { status: 429 });
-  // Hard daily character cap (Flash v2.5 costs about half a credit per character).
+  // Only lines that cost credits count against the visitor; cached audio is free.
+  const limited = await rateLimit(req, "speak");
+  if (limited) return limited;
+  // Hard daily character cap (Multilingual v2 costs about one credit per character).
   if (!(await spend("elevenlabs-chars", envLimit("ELEVENLABS_DAILY_CHARS", 2500), text.length))) {
     return NextResponse.json({ ok: false, code: "budget" }, { status: 429 });
   }
@@ -87,8 +91,7 @@ export async function GET(req: Request) {
       body: JSON.stringify({
         text,
         model_id: model,
-        // Steady and a little dry. Deadpan needs consistency more than range.
-        voice_settings: { stability: 0.6, similarity_boost: 0.75, style: 0, use_speaker_boost: true },
+        voice_settings: { stability, similarity_boost: 0.8, style, use_speaker_boost: true },
       }),
       signal: AbortSignal.timeout(12_000),
     });

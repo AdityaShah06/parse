@@ -4,6 +4,7 @@ import { CRISIS_ANSWER, MEDICAL_ANSWER, matchFaq } from "@/lib/guide";
 import { NoKey } from "@/lib/llm";
 import { envLimit, spend } from "@/lib/server-cache";
 import { PEOPLE } from "@/lib/kb/people";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 // Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
@@ -20,6 +21,8 @@ const peopleCards = (ids: string[]) => [{ type: "people", data: ids.filter((i) =
  * -> { ok, text, cards, tools }
  */
 export async function POST(req: Request) {
+  const limited = await rateLimit(req, "agent");
+  if (limited) return limited;
   const body = (await req.json().catch(() => null)) as { question?: unknown; history?: unknown; context?: AgentContext } | null;
   const q = typeof body?.question === "string" ? body.question.trim().slice(0, 800) : "";
   const ctx = body?.context;

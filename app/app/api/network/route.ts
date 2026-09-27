@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { formatAddress, isPlanId, providersCovered, providersSearch, toHttpError } from "@/lib/marketplace";
 import { checkPlaces, NETWORK_SOURCE, type PlaceIn } from "@/lib/network";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 // Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
@@ -18,6 +19,8 @@ const SOURCE = NETWORK_SOURCE;
  * GET /api/network?planId=&npis=a,b checks NPIs directly.
  */
 export async function POST(req: Request) {
+  const limited = await rateLimit(req, "places");
+  if (limited) return limited;
   let body: { planId?: string; zip?: string; places?: PlaceIn[] };
   try {
     body = await req.json();
@@ -39,6 +42,8 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
+  const limited = await rateLimit(req, "places");
+  if (limited) return limited;
   const u = new URL(req.url).searchParams;
   const planId = u.get("planId") ?? "";
   const npis = (u.get("npis") ?? "").split(",").filter(Boolean).slice(0, 40);

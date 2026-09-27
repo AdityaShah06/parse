@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { STATE_MARKETPLACES, isHealthcareGovState, countiesByZip, getPlan, searchPlans, toEnginePlanDetailed, toHttpError, type ApiPlan } from "@/lib/marketplace";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 // Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
@@ -12,6 +13,8 @@ export const maxDuration = 60;
  * marketplace get a pointer to it instead.
  */
 export async function GET(req: Request) {
+  const limited = await rateLimit(req, "lookup");
+  if (limited) return limited;
   const u = new URL(req.url).searchParams;
   const zip = (u.get("zip") ?? "").trim();
   const age = Number(u.get("age") ?? 26);

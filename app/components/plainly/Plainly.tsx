@@ -246,7 +246,7 @@ export default function Plainly() {
                     {s.room === "rx" && <Pharmacy my={my} events={events} />}
                     {s.room === "care" && <FindCare my={my} events={events} zip={s.zip} category={s.careCat} />}
                     {s.room === "ambulance" && <AmbulanceGame plan={my.plan} baseEvents={events} zip={s.zip} selfFunded={s.info?.selfFunded ?? null} />}
-                    {s.room === "denied" && <Denied planSelfFunded={s.info?.selfFunded ?? null} />}
+                    {s.room === "denied" && <Denied planSelfFunded={s.info?.selfFunded ?? null} hiosId={my.hiosId} issuer={my.issuer} />}
                     {s.room === "ask" && <Agent my={my} events={events} zip={s.zip} goCare={(category) => dispatch({ type: "find-care", category })} />}
                   </motion.div>
                 </AnimatePresence>

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { ApiError, NoKey, extractJson } from "@/lib/llm";
 import { cached } from "@/lib/server-cache";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 // Gemini and the CMS API can take tens of seconds; 60 is the ceiling on every Vercel plan.
@@ -55,6 +56,8 @@ function clean(text: unknown, allowed: Set<string>): string | null {
 }
 
 export async function POST(req: Request) {
+  const limited = await rateLimit(req, "explain");
+  if (limited) return limited;
   const body = (await req.json().catch(() => null)) as { facts?: unknown } | null;
   const facts = body?.facts;
   if (!facts || typeof facts !== "object") return NextResponse.json({ ok: false, code: "bad_request" }, { status: 400 });
